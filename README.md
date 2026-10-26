@@ -1,4 +1,4 @@
-# EqualPay Global — Global Remote Salary & Purchasing Power Parity (PPP) Calculator
+# PayEquator Global — Global Remote Salary & Purchasing Power Parity (PPP) Calculator
 
 A high-performance, single-page web application engineered with a **Modern Dark Fintech** aesthetic. It converts local compensation into global purchasing power instantly using verified cost-of-living parity data from the World Bank International Comparison Program (ICP) and Numbeo indices.
 
@@ -47,7 +47,7 @@ A high-performance, single-page web application engineered with a **Modern Dark 
      * User's target role & city comparison route
      * Local base pay vs true PPP equivalent purchasing value
      * Lifestyle leverage multiplier & national wealth tier standing
-     * Branded site watermark (`Calculated via EqualPay.global • Zero-Latency PPP Engine`)
+     * Branded site watermark (`Calculated via PayEquator.global • Zero-Latency PPP Engine`)
    - **Social Distribution**: Direct share to **LinkedIn** and **X (Twitter)** with pre-composed insights.
    - **Shareable State Link**: Dynamic URL query parameter persistence (`?salary=...&curr=...&home=...&target=...&role=...`).
 

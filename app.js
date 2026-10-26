@@ -1,5 +1,5 @@
 /**
- * EqualPay Global - Interactive Application Engine
+ * PayEquator Global - Interactive Application Engine
  * Zero-latency browser calculations, visual meters, charts, and social card export
  * Expanded to 25 Major Tech / Remote-Hiring Hubs with Instant Responsive Search Filter
  */
@@ -797,8 +797,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (pollShareBtn) {
     pollShareBtn.addEventListener('click', () => {
       const currentUrl = encodeURIComponent(window.location.origin + window.location.pathname);
-      const text = encodeURIComponent("Was your last international remote salary offer fair? Vote in the live global developer benchmark on EqualPay Global:");
-      const tweetUrl = `https://twitter.com/intent/tweet?text=${text}&url=${currentUrl}&hashtags=RemoteWork,TechSalary,EqualPay`;
+      const text = encodeURIComponent("Was your last international remote salary offer fair? Vote in the live global developer benchmark on PayEquator Global:");
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${text}&url=${currentUrl}&hashtags=RemoteWork,TechSalary,PayEquator`;
       window.open(tweetUrl, '_blank', 'width=600,height=450');
     });
   }
@@ -1166,7 +1166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.textAlign = 'left';
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 24px "Inter", -apple-system, sans-serif';
-    ctx.fillText('EqualPay Global', 122, 58);
+    ctx.fillText('PayEquator Global', 122, 58);
 
     // Subtitle
     ctx.fillStyle = '#94A3B8';
@@ -1332,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.textAlign = 'left';
     ctx.fillStyle = '#64748B';
     ctx.font = '12px "JetBrains Mono", monospace';
-    ctx.fillText('🔒 Calculated via EqualPay.global • Zero-Latency Parity Architecture', 60, 574);
+    ctx.fillText('🔒 Calculated via PayEquator.com • Zero-Latency Parity Architecture', 60, 574);
 
     // Right Watermark
     ctx.textAlign = 'right';
@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger Direct PNG Download
     const dataUrl = canvas.toDataURL('image/png', 1.0);
     const link = document.createElement('a');
-    link.download = `EqualPay-Scorecard-1200x630-${selectedRole.replace(/\s+/g, '-')}-${Date.now()}.png`;
+    link.download = `PayEquator-Scorecard-1200x630-${selectedRole.replace(/\s+/g, '-')}-${Date.now()}.png`;
     link.href = dataUrl;
     link.click();
 
@@ -1378,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Share on LinkedIn
   shareLinkedinBtn.addEventListener('click', () => {
     const currentUrl = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(`I just evaluated my global remote salary on EqualPay Global! Discover your true Purchasing Power Parity:`);
+    const title = encodeURIComponent(`I just evaluated my global remote salary on PayEquator Global! Discover your true Purchasing Power Parity:`);
     const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}&summary=${title}`;
     window.open(shareUrl, '_blank', 'width=600,height=500');
   });
@@ -1389,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const role = roleSelect.value;
     const text = encodeURIComponent(`Calculated my remote ${role} salary parity with World Bank PPP data: equivalent to ${pppVal} in US purchasing power! 🚀 Check your true value:`);
     const url = encodeURIComponent(window.location.href);
-    const tweetUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=RemoteWork,TechSalary,EqualPay,PPP`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=RemoteWork,TechSalary,PayEquator,PPP`;
     window.open(tweetUrl, '_blank', 'width=600,height=450');
   });
 
