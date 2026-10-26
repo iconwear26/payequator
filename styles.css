@@ -1,0 +1,565 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg-deep: #0B0F19;
+  --bg-surface: #161F30;
+  --bg-surface-elevated: #1D2A42;
+  --border-subtle: #26334D;
+  --border-highlight: rgba(163, 230, 53, 0.3);
+  --neon-lime: #A3E635;
+  --neon-emerald: #10B981;
+  --sky-blue: #38BDF8;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "calt", "kern";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.012em;
+  overflow-x: hidden;
+}
+
+/* Professional Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+h1 {
+  letter-spacing: -0.038em;
+  line-height: 1.12;
+}
+
+h2 {
+  letter-spacing: -0.03em;
+  line-height: 1.22;
+}
+
+h3 {
+  letter-spacing: -0.02em;
+}
+
+p {
+  line-height: 1.68;
+}
+
+.mono-font, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Eyebrow Label Typography */
+.eyebrow-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Background Atmospheric Glows */
+.bg-ambient-grid {
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
+    linear-gradient(to right, rgba(38, 51, 77, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(38, 51, 77, 0.15) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+}
+
+/* Glassmorphic Dark Container */
+.glass-panel {
+  background: rgba(22, 31, 48, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-elevated {
+  background: rgba(29, 42, 66, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
+}
+
+.glass-panel:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+/* Neon Glow Accents */
+.btn-neon-primary {
+  background: linear-gradient(135deg, #A3E635 0%, #10B981 100%);
+  color: #05130B;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-neon-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(163, 230, 53, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  filter: brightness(1.05);
+}
+
+.btn-neon-primary:active {
+  transform: translateY(1px);
+}
+
+.pulse-indicator {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background-color: var(--neon-lime);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--neon-lime);
+  animation: pulseNeon 2s infinite;
+}
+
+@keyframes pulseNeon {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(163, 230, 53, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0);
+  }
+}
+
+/* Subtle Shimmer for High Value Numbers */
+.gradient-text-neon {
+  background: linear-gradient(135deg, #FFFFFF 20%, #A3E635 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-sky {
+  background: linear-gradient(135deg, #FFFFFF 30%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Combobox Popover animation */
+#home-combobox-menu, #target-combobox-menu {
+  animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.15);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Custom Select & Form Styles */
+.custom-input {
+  background: rgba(11, 15, 25, 0.75);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: var(--sky-blue);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* AdSense Slot Native Wrappers & CLS Containment */
+.adsense-wrapper {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px dashed rgba(38, 51, 77, 0.9);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  contain: layout style paint;
+}
+
+#ad-slot-leaderboard {
+  min-height: 90px;
+}
+
+#ad-slot-rectangle {
+  min-width: 300px;
+  min-height: 250px;
+}
+
+.ad-badge {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748B;
+  background: rgba(11, 15, 25, 0.7);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Radial Gauge Container */
+.gauge-svg {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.gauge-circle-bg {
+  stroke: #1e293b;
+  stroke-width: 14;
+  fill: none;
+}
+
+.gauge-circle-progress {
+  stroke-width: 14;
+  stroke-linecap: round;
+  fill: none;
+  transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.5s ease;
+}
+
+/* Scorecard Export Styles */
+#scorecard-container {
+  background: radial-gradient(circle at 10% 20%, rgba(29, 42, 66, 0.95), rgba(11, 15, 25, 0.98));
+  border: 1px solid rgba(163, 230, 53, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+#scorecard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #A3E635, #38BDF8);
+}
+
+/* Light Mode Theme Overrides */
+html.light-mode {
+  --bg-deep: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --border-subtle: #E2E8F0;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+}
+
+html.light-mode body {
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+html.light-mode .glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+html.light-mode .glass-panel-elevated {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+}
+
+html.light-mode .custom-input {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+html.light-mode #home-combobox-menu,
+html.light-mode #target-combobox-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: #CBD5E1;
+}
+
+html.light-mode header {
+  background: rgba(248, 250, 252, 0.92);
+  border-color: #E2E8F0;
+}
+
+html.light-mode footer {
+  background: #F1F5F9;
+  border-color: #E2E8F0;
+}
+
+html.light-mode h1, 
+html.light-mode h2, 
+html.light-mode h3, 
+html.light-mode h4,
+html.light-mode .text-white {
+  color: #0F172A !important;
+}
+
+html.light-mode .text-slate-300,
+html.light-mode .text-slate-400 {
+  color: #475569 !important;
+}
+
+html.light-mode .bg-\[\#0B0F19\] {
+  background-color: #F8FAFC !important;
+}
+
+html.light-mode .bg-\[\#161F30\] {
+  background-color: #EDF2F7 !important;
+}
+
+html.light-mode .bg-\[\#1D2A42\] {
+  background-color: #E2E8F0 !important;
+}
+
+html.light-mode .border-\[\#26334D\] {
+  border-color: #CBD5E1 !important;
+}
+
+html.light-mode select, 
+html.light-mode input, 
+html.light-mode textarea {
+  color: #0F172A !important;
+  background-color: #FFFFFF !important;
+}
+
+html.light-mode .community-feed-item {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+}
+
+/* Dedicated Print-to-PDF Stylesheet for Compensation Brief */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  header, footer, .adsense-wrapper, #quick-share-btn, #mobile-menu-toggle-btn, #cookie-consent-banner, #salary-presets, #negotiation-tone-toggle, #download-card-btn, #download-brief-pdf-btn, #share-linkedin-btn, #share-twitter-btn, #copy-link-btn, #community-poll-section, #community-salary-feed {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .glass-panel {
+    background: #FFFFFF !important;
+    border: 1px solid #CCCCCC !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  #scorecard-container {
+    background: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  #scorecard-container * {
+    color: #000000 !important;
+  }
+
+  #sc-ppp-salary {
+    color: #047857 !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #26334D;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #38BDF8;
+}
+
+/* Tooltip Styles */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0f172a;
+  color: #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border: 1px solid #334155;
+  z-index: 50;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* FAQ Accordion Summary Marker Reset & Smooth Hover */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+}
+
+details[open] {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(29, 42, 66, 0.65);
+}
+
+/* Styled Blockquote for Editorial Articles */
+blockquote.fintech-quote {
+  border-left: 3px solid var(--neon-lime);
+  background: rgba(16, 185, 129, 0.06);
+  padding: 14px 18px;
+  border-radius: 0 10px 10px 0;
+  color: #E2E8F0;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+
+/* Stacked Lifestyle Expense Bar */
+.stacked-expense-bar {
+  display: flex;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  background-color: #0B0F19;
+  border: 1px solid var(--border-subtle);
+}
+
+.stacked-expense-bar > div {
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Poll Option Card */
+.poll-option-card {
+  background: rgba(11, 15, 25, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.poll-option-card:hover {
+  border-color: var(--sky-blue);
+  background: rgba(29, 42, 66, 0.5);
+}
+
+.poll-option-card.voted {
+  border-color: var(--neon-lime);
+}
+
+.poll-bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(56, 189, 248, 0.15);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.poll-option-card.voted .poll-bar-fill {
+  background: rgba(163, 230, 53, 0.2);
+}
+
+/* Corridor Quick-Link Cards */
+.corridor-card {
+  background: rgba(22, 31, 48, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.corridor-card:hover {
+  border-color: var(--sky-blue);
+  transform: translateY(-2px);
+  background: rgba(29, 42, 66, 0.9);
+  box-shadow: 0 8px 24px -4px rgba(56, 189, 248, 0.12);
+}
+
+html.light-mode .corridor-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+}
+
+html.light-mode .corridor-card:hover {
+  border-color: #38BDF8;
+  box-shadow: 0 8px 20px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Treaty Lookup Card */
+.treaty-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+

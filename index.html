@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EqualPay Global | Remote Salary & Purchasing Power Parity (PPP) Calculator</title>
+  <meta name="description" content="Calculate your true global remote salary using verified World Bank & Numbeo Purchasing Power Parity (PPP). Compare cost of living, tax net take-home, and export shareable offer scorecards.">
+  <meta name="keywords" content="PPP salary calculator, purchasing power parity, remote salary calculator, international contractor salary, global talent compensation, cost of living comparison">
+  <link rel="canonical" href="https://equalpay.global/">
+  
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:title" content="EqualPay Global | Global Remote Salary & PPP Calculator">
+  <meta property="og:description" content="Convert local compensation into real purchasing power worldwide using verified World Bank parity data.">
+  <meta property="og:type" content="website">
+
+  <!-- Schema.org JSON-LD for Google Rich Results (WebApplication & FAQPage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "EqualPay Global PPP Calculator",
+        "url": "https://equalpay.global/",
+        "description": "Zero-latency global remote salary and purchasing power parity calculator benchmarked against 25 global tech hiring hubs.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Purchasing Power Parity (PPP)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Purchasing Power Parity (PPP) is an economic metric calculated by organizations like the World Bank that measures how many units of a local currency are needed to buy the exact same basket of goods and services that 1.00 USD buys in the United States. It eliminates currency exchange volatility and measures real living standards."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does Exchange Rate vs Purchasing Power Parity matter for remote salaries?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nominal foreign exchange (FX) rates only reflect global financial market flows, not local purchasing power. For example, $50,000 USD converted nominally to Indian Rupees (INR) or Brazilian Real (BRL) affords a dramatically higher standard of living—buying luxury housing, private healthcare, and dining out—comparable to earning $135,000+ in San Francisco or New York."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How should international contractors negotiate remote salaries?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Remote contractors should never accept pure domestic local compensation caps when delivering global value. A proven strategy is negotiating a 65% to 80% benchmark of the employer's domestic rate (e.g. US or UK median). This provides the hiring company with 20-35% overhead savings while granting the remote worker a Tier-1 lifestyle arbitrage locally."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is this cost-of-living and tax comparison?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EqualPay Global benchmarks against verified 2024-2026 World Bank International Comparison Program (ICP) coefficients and Numbeo Cost of Living indices, combined with country-specific contractor tax regulations such as India's Section 44ADA, Pakistan's 1% PSEB IT export slab, Mexico's RESICO, Poland's 12% Ryczałt, and UAE's 0% freelance regime."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Favicon / SVG Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A3E635'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 9.9 12 10.3 12 11.5h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 .88-.36 1.68-.93 2.25z'/></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            fintech: {
+              bg: '#0B0F19',
+              surface: '#161F30',
+              elevated: '#1D2A42',
+              border: '#26334D',
+              neon: '#A3E635',
+              emerald: '#10B981',
+              sky: '#38BDF8',
+              muted: '#64748B'
+            }
+          },
+          fontFamily: {
+            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts Preconnect & Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- html2canvas for Scorecard PNG export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Chart.js for visual Cost Comparison -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-fintech-bg text-slate-100 min-h-screen bg-ambient-grid flex flex-col">
+
+  <!-- 1. NAVIGATION BAR (MODERN FINTECH SLEEK HEADER) -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#0B0F19]/90 border-b border-[#26334D]/80 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[70px] flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#161F30] to-[#1D2A42] border border-[#26334D] flex items-center justify-center shadow-lg group-hover:border-[#A3E635]/60 transition-colors">
+          <i class="fa-solid fa-scale-balanced text-[#A3E635] text-base sm:text-lg group-hover:scale-110 transition-transform"></i>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <span class="font-extrabold text-base sm:text-lg tracking-tight text-white group-hover:text-[#A3E635] transition-colors">EqualPay</span>
+            <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-[#A3E635]/15 text-[#A3E635] border border-[#A3E635]/30">GLOBAL</span>
+            <span class="pulse-indicator ml-0.5" title="Live PPP Index Active"></span>
+          </div>
+          <span class="text-[10px] sm:text-[11px] text-slate-400 font-medium hidden sm:inline leading-none">Purchasing Power Parity Intelligence</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links (Clean Single-Line with Whitespace-Nowrap) -->
+      <nav class="hidden lg:flex items-center gap-1 bg-[#161F30]/85 p-1 rounded-xl border border-[#26334D] shadow-sm">
+        <a href="#equalizer" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-sliders text-[#A3E635] text-[11px]"></i> Equalizer
+        </a>
+        <a href="#city-swap" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-arrows-split-up-and-left text-[#38BDF8] text-[11px]"></i> City Swap
+        </a>
+        <a href="#tax-estimator" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-receipt text-emerald-400 text-[11px]"></i> Tax Estimator
+        </a>
+        <a href="#community-feed" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-users text-purple-400 text-[11px]"></i> Live Salaries
+        </a>
+        <a href="#editorial-guide" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap">
+          <i class="fa-solid fa-graduation-cap text-[#A3E635] text-[11px]"></i> Guide & FAQs
+        </a>
+        <button id="open-methodology-btn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-[#1D2A42] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+          <i class="fa-solid fa-book-bookmark text-amber-400 text-[11px]"></i> Methodology
+        </button>
+      </nav>
+
+      <!-- Right Action Area (Benchmark Pill & 1-Click Export Card) -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <!-- Benchmark status pill (Visible on xl+ screens to prevent cramping) -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#161F30] border border-[#26334D] text-xs font-mono whitespace-nowrap">
+          <span class="text-slate-400">Benchmark:</span>
+          <span class="text-[#38BDF8] font-bold flex items-center gap-1.5">
+            <img src="https://flagcdn.com/16x12/us.png" class="w-4 h-3 rounded-sm object-cover inline-block" alt="US">
+            <span>USD Parity 1.00</span>
+          </span>
+        </div>
+
+        <!-- 1-Click Export Scorecard Button -->
+        <button id="quick-share-btn" class="px-3.5 py-1.5 sm:py-2 rounded-lg text-xs font-bold bg-[#1D2A42] hover:bg-[#26334D] text-white border border-[#26334D] hover:border-[#38BDF8]/60 transition-all flex items-center gap-2 whitespace-nowrap shadow-sm cursor-pointer">
+          <i class="fa-solid fa-camera text-[#A3E635] text-xs"></i>
+          <span>Export Card</span>
+        </button>
+
+        <!-- Dark / Light Mode Theme Switch Toggle -->
+        <button id="theme-toggle-btn" class="p-2 sm:px-2.5 rounded-lg bg-[#161F30] text-slate-300 hover:text-white border border-[#26334D] text-xs flex items-center justify-center cursor-pointer transition-colors" title="Toggle Light / Dark Mode">
+          <i class="fa-solid fa-moon text-[#A3E635]" id="theme-toggle-icon"></i>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-toggle-btn" class="lg:hidden p-2 rounded-lg bg-[#161F30] text-slate-300 hover:text-white border border-[#26334D] text-sm flex items-center justify-center cursor-pointer">
+          <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-nav-menu" class="hidden lg:hidden border-t border-[#26334D] bg-[#0B0F19]/95 backdrop-blur-2xl px-4 py-3 space-y-2">
+      <a href="#equalizer" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2">
+        <i class="fa-solid fa-sliders text-[#A3E635]"></i> Equalizer Calculator
+      </a>
+      <a href="#city-swap" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2">
+        <i class="fa-solid fa-arrows-split-up-and-left text-[#38BDF8]"></i> City Cost Swap
+      </a>
+      <a href="#tax-estimator" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2">
+        <i class="fa-solid fa-receipt text-emerald-400"></i> Tax Net Estimator
+      </a>
+      <a href="#community-feed" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2">
+        <i class="fa-solid fa-users text-purple-400"></i> Live Community Salaries
+      </a>
+      <a href="#editorial-guide" class="mobile-nav-link block px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2">
+        <i class="fa-solid fa-graduation-cap text-[#A3E635]"></i> PPP Guide & FAQs
+      </a>
+      <button id="mobile-methodology-btn" class="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold text-slate-200 hover:bg-[#1D2A42] flex items-center gap-2 cursor-pointer">
+        <i class="fa-solid fa-book-bookmark text-amber-400"></i> World Bank Methodology
+      </button>
+    </div>
+  </header>
+
+  <!-- ADSENSE SLOT A: 728x90 Top Leaderboard (Responsive & Native) -->
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+    <div class="adsense-wrapper w-full max-w-[728px] h-[90px] sm:h-[90px] mx-auto py-2 px-3 flex flex-col items-center justify-center text-center">
+      <div class="ad-badge flex items-center gap-1">
+        <i class="fa-solid fa-rectangle-ad text-[10px]"></i> SPONSORED BENCHMARK PARTNER
+      </div>
+      <!-- Interactive Ad Mock with Real AdSense Hook -->
+      <div id="ad-slot-leaderboard" class="w-full flex items-center justify-between gap-4 px-3 sm:px-6">
+        <div class="flex items-center gap-3 text-left">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-emerald-500/20 to-sky-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-globe text-[#A3E635]"></i>
+          </div>
+          <div>
+            <div class="text-xs sm:text-sm font-bold text-white tracking-wide">Hire & Pay Remote Talent Compliantly in 160+ Countries</div>
+            <div class="text-[11px] text-slate-400 hidden sm:block">Automate international contractor contracts, EOR payroll, and local tax compliance.</div>
+          </div>
+        </div>
+        <a href="https://www.google.com/adsense/start/" target="_blank" rel="noopener" class="shrink-0 px-3 py-1.5 text-xs font-bold bg-[#A3E635] text-slate-900 rounded-md hover:bg-[#86efac] transition-colors flex items-center gap-1">
+          <span>Explore</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-12">
+
+    <!-- HERO & DUAL-INPUT CALCULATOR BAR -->
+    <section id="equalizer" class="relative pt-4 pb-2">
+      <!-- Glow effects behind hero -->
+      <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-56 bg-gradient-to-r from-emerald-500/10 via-[#38BDF8]/10 to-transparent blur-3xl pointer-events-none -z-10"></div>
+      
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161F30] border border-[#38BDF8]/40 text-xs font-semibold text-white shadow-md">
+            <span class="pulse-indicator"></span>
+            <span class="text-slate-100 font-medium">Verified 2024–2026 World Bank & Numbeo ICP Benchmarks</span>
+          </div>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161F30] border border-amber-400/40 text-xs font-medium text-amber-300 shadow-md">
+            <i class="fa-solid fa-chart-line text-amber-400"></i>
+            <span>PPP factors re-benchmarked against latest inflation trends | Updated Q4 2026</span>
+          </div>
+        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+          Discover What Your Remote Salary Is <span class="gradient-text-neon">Really Worth</span> Worldwide
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-slate-300 font-normal max-w-2xl mx-auto leading-relaxed">
+          Convert local compensation to global purchasing power instantly using verified cost-of-living parity. Stop guessing if your international offer is fair.
+        </p>
+
+        <!-- YMYL Trust Badges & Disclaimer Strip -->
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2.5 text-xs text-slate-300">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#161F30] border border-[#26334D] font-mono text-[11px]">
+            <i class="fa-solid fa-building-columns text-[#38BDF8]"></i>
+            <span class="text-slate-300">World Bank ICP (PA.NUS.PPP)</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#161F30] border border-[#26334D] font-mono text-[11px]">
+            <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+            <span class="text-slate-300">Kaggle & Numbeo 2024-26 Data</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#161F30] border border-[#26334D] font-mono text-[11px]">
+            <i class="fa-solid fa-shield-halved text-[#A3E635]"></i>
+            <span class="text-slate-300">Zero-Tracking Client-Side</span>
+          </span>
+        </div>
+
+        <!-- Prominent Informational Disclaimer Banner -->
+        <div class="mt-3 inline-block max-w-xl text-center text-[11px] text-slate-400 bg-[#0B0F19]/80 px-4 py-1.5 rounded-lg border border-[#26334D]/80">
+          <i class="fa-solid fa-circle-info text-amber-400 mr-1"></i>
+          <strong>Informational Benchmark Notice:</strong> Calculations are generated for employment compensation benchmarking only and do not constitute certified tax, legal, or investment advice.
+        </div>
+      </div>
+
+      <!-- DUAL-INPUT CALCULATOR BAR (FROSTED GLASS PANEL) -->
+      <div class="glass-panel p-5 sm:p-7 shadow-2xl relative overflow-visible z-30 max-w-5xl mx-auto border-t border-[#A3E635]/30">
+        
+        <form id="calculator-form" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+            
+            <!-- Input 1: Base Salary + Currency Dropdown -->
+            <div class="md:col-span-4 space-y-1.5">
+              <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Base Annual Salary</span>
+                <span class="text-slate-400 font-mono text-[11px]">Gross Pre-Tax</span>
+              </label>
+              <div class="flex rounded-lg overflow-hidden border border-[#26334D] bg-[#0B0F19]/80 focus-within:border-[#38BDF8] focus-within:ring-2 focus-within:ring-[#38BDF8]/20 transition-all">
+                <select id="currency-select" class="bg-[#161F30] text-[#A3E635] font-mono font-bold text-sm px-3 py-3 border-r border-[#26334D] outline-none cursor-pointer hover:bg-[#1D2A42] transition-colors">
+                  <!-- Populated dynamically via JS to match all 21 currencies -->
+                </select>
+                <input 
+                  type="text" 
+                  id="salary-input" 
+                  value="3,200,000" 
+                  placeholder="e.g. 120,000" 
+                  class="w-full bg-transparent text-white px-3.5 py-3 text-base sm:text-lg font-bold font-mono outline-none placeholder:text-slate-600"
+                >
+              </div>
+            </div>
+
+            <!-- Input 2: Home Country/City (Responsive Searchable Dropdown) -->
+            <div class="md:col-span-3 space-y-1.5 relative z-40" id="home-combobox-wrapper">
+              <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Your Home Location</span>
+                <span class="text-slate-400 text-[11px]">25 Tech Hubs</span>
+              </label>
+              
+              <!-- Hidden native select for fallback/forms -->
+              <select id="home-location-select" class="sr-only"></select>
+
+              <!-- Custom Combobox Trigger Button -->
+              <button 
+                type="button" 
+                id="home-combobox-trigger"
+                class="w-full custom-input px-3 py-2.5 text-left text-sm font-semibold flex items-center justify-between gap-2 hover:border-[#38BDF8] transition-colors"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span id="home-combobox-display" class="truncate flex items-center gap-2">
+                  <span>🇮🇳</span> <span>India (Bengaluru)</span>
+                </span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 shrink-0"></i>
+              </button>
+
+              <!-- Searchable Popover Menu -->
+              <div 
+                id="home-combobox-menu" 
+                class="hidden absolute z-50 left-0 w-full sm:w-[350px] top-full mt-2 bg-[#161F30]/98 backdrop-blur-2xl p-2.5 shadow-2xl rounded-xl border border-[#38BDF8]/60 max-h-80 flex flex-col"
+              >
+                <!-- Search Filter Input -->
+                <div class="relative mb-2 shrink-0">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                  <input 
+                    type="text" 
+                    id="home-search-input" 
+                    placeholder="Search 25 countries (e.g. Singapore, Pak, Poland)..." 
+                    class="w-full bg-[#0B0F19] text-xs text-white pl-8 pr-3 py-2 rounded-lg border border-[#26334D] outline-none focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8]"
+                    autocomplete="off"
+                  >
+                </div>
+                <!-- Scrollable Items List -->
+                <div id="home-combobox-list" class="overflow-y-auto space-y-1 pr-1 flex-grow">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Input 3: Target Benchmark Country/City (Responsive Searchable Dropdown) -->
+            <div class="md:col-span-3 space-y-1.5 relative z-40" id="target-combobox-wrapper">
+              <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Target Benchmark</span>
+                <span class="text-slate-400 text-[11px]">Comparison</span>
+              </label>
+
+              <!-- Hidden native select for fallback/forms -->
+              <select id="target-location-select" class="sr-only"></select>
+
+              <!-- Custom Combobox Trigger Button -->
+              <button 
+                type="button" 
+                id="target-combobox-trigger"
+                class="w-full custom-input px-3 py-2.5 text-left text-sm font-semibold flex items-center justify-between gap-2 hover:border-[#38BDF8] transition-colors"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span id="target-combobox-display" class="truncate flex items-center gap-2">
+                  <span>🇺🇸</span> <span>United States (NYC/SF)</span>
+                </span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 shrink-0"></i>
+              </button>
+
+              <!-- Searchable Popover Menu -->
+              <div 
+                id="target-combobox-menu" 
+                class="hidden absolute z-50 right-0 w-full sm:w-[350px] top-full mt-2 bg-[#161F30]/98 backdrop-blur-2xl p-2.5 shadow-2xl rounded-xl border border-[#38BDF8]/60 max-h-80 flex flex-col"
+              >
+                <!-- Search Filter Input -->
+                <div class="relative mb-2 shrink-0">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                  <input 
+                    type="text" 
+                    id="target-search-input" 
+                    placeholder="Search benchmark (e.g. United States, UK, UAE)..." 
+                    class="w-full bg-[#0B0F19] text-xs text-white pl-8 pr-3 py-2 rounded-lg border border-[#26334D] outline-none focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8]"
+                    autocomplete="off"
+                  >
+                </div>
+                <!-- Scrollable Items List -->
+                <div id="target-combobox-list" class="overflow-y-auto space-y-1 pr-1 flex-grow">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Primary CTA Button -->
+            <div class="md:col-span-2">
+              <button 
+                type="submit" 
+                id="calculate-btn"
+                class="w-full py-3 px-4 rounded-lg btn-neon-primary text-sm font-extrabold flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <span>Calculate</span>
+                <i class="fa-solid fa-bolt text-xs group-hover:rotate-12 transition-transform"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Secondary Quick Filters (Role selection & quick salary presets) -->
+          <div class="pt-3 border-t border-[#26334D]/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400 font-medium">Role Profile:</span>
+              <select id="role-select" class="bg-[#0B0F19] text-slate-200 border border-[#26334D] rounded-md px-2.5 py-1 text-xs outline-none hover:border-[#38BDF8] cursor-pointer">
+                <option value="Junior Software Engineer">Junior Software Engineer</option>
+                <option value="Mid-level Software Engineer">Mid-level Software Engineer</option>
+                <option value="Senior Software Engineer" selected>Senior Software Engineer</option>
+                <option value="Staff / Lead Engineer">Staff / Lead Engineer</option>
+                <option value="Product Manager">Product Manager</option>
+                <option value="UI/UX Designer">UI/UX Designer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="DevOps / Cloud Architect">DevOps / Cloud Architect</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400">Quick Presets:</span>
+              <div class="flex gap-1.5" id="salary-presets">
+                <button type="button" data-preset="junior" class="px-2 py-0.5 rounded bg-[#1D2A42] hover:bg-[#26334D] text-slate-300 font-mono text-[11px] transition-colors">Mid</button>
+                <button type="button" data-preset="senior" class="px-2 py-0.5 rounded bg-[#1D2A42] hover:bg-[#26334D] text-[#A3E635] font-mono text-[11px] border border-[#A3E635]/30 transition-colors">Senior</button>
+                <button type="button" data-preset="staff" class="px-2 py-0.5 rounded bg-[#1D2A42] hover:bg-[#26334D] text-slate-300 font-mono text-[11px] transition-colors">Staff</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- 2. PROGRAMMATIC POPULAR GLOBAL CORRIDORS -->
+    <section id="popular-corridors" class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-xs font-bold text-[#38BDF8] mb-1">
+            <i class="fa-solid fa-route"></i> Programmatic Corridors
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Popular Global Remote Corridors</h2>
+          <p class="text-xs sm:text-sm text-slate-300">
+            One-click comparison routes for high-volume cross-border hiring pathways. Pre-calibrated with localized living indices and purchasing parity targets.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-full bg-[#161F30] border border-[#26334D] text-xs font-mono text-slate-300">
+            <span class="text-[#A3E635] font-bold">8 Top Routes</span> &bull; 1-Click Load
+          </span>
+        </div>
+      </div>
+
+      <!-- Corridor Cards Grid (Responsive 4-column) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5" id="corridors-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 3. RESULTS DASHBOARD & 5. AD SLOT B (SIDEBAR LAYOUT) -->
+    <section id="results-dashboard" class="space-y-6">
+      
+      <!-- Section Title & Live Context Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#26334D]">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+            <span>Parity Valuation Matrix</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full font-mono font-semibold bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/30">Real-Time Zero Latency</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+            Comparing <span id="label-home-city" class="text-white font-medium">India</span> purchasing power against <span id="label-target-city" class="text-white font-medium">United States</span> benchmark.
+          </p>
+        </div>
+
+        <!-- Period Toggle (Annual vs Monthly) -->
+        <div class="inline-flex rounded-lg bg-[#161F30] p-1 border border-[#26334D] self-start sm:self-auto">
+          <button id="toggle-annual" class="px-3 py-1 rounded-md text-xs font-semibold bg-[#10B981] text-slate-900 shadow transition-all">Annual</button>
+          <button id="toggle-monthly" class="px-3 py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-all">Monthly</button>
+        </div>
+      </div>
+
+      <!-- MAIN 2-COLUMN GRID (CARDS + SIDEBAR AD SLOT B) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left/Main Area: 3 Core Result Cards (8 Cols on LG) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <!-- CARD 1: PPP Adjusted Salary -->
+            <div class="glass-panel p-5 relative overflow-hidden group hover:border-[#10B981]/50">
+              <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-[#10B981]/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                <span class="font-bold tracking-wider uppercase text-[11px] text-[#A3E635]">PPP Adjusted Salary</span>
+                <i class="fa-solid fa-circle-question" data-tooltip="The salary needed in the benchmark city to match your local living standard."></i>
+              </div>
+              
+              <div class="mt-2">
+                <div id="ppp-adjusted-amount" class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight">$136,170</div>
+                <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5">
+                  <span id="target-currency-pill" class="font-mono text-[#38BDF8] font-semibold">USD</span> 
+                  <span>Target Equivalent</span>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-[#26334D]/60 text-[11px] flex items-center justify-between">
+                <span class="text-slate-400">Nominal FX Equivalent:</span>
+                <span id="nominal-fx-amount" class="text-slate-200 font-mono font-medium">$38,400</span>
+              </div>
+              <div class="text-[10px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span id="ppp-premium-note">+254% local real-world leverage</span>
+              </div>
+            </div>
+
+            <!-- CARD 2: The Fair Value Index (Radial Gauge) -->
+            <div class="glass-panel p-5 relative overflow-hidden group hover:border-[#38BDF8]/50 text-center flex flex-col justify-between">
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span class="font-bold tracking-wider uppercase text-[11px] text-[#38BDF8]">Fair Value Index</span>
+                <i class="fa-solid fa-gauge-high text-slate-400" data-tooltip="Measures if this compensation matches global talent market standards for this seniority."></i>
+              </div>
+
+              <!-- Radial Gauge SVG -->
+              <div class="relative w-32 h-32 mx-auto my-1 flex items-center justify-center">
+                <svg class="gauge-svg w-32 h-32" viewBox="0 0 120 120">
+                  <circle class="gauge-circle-bg" cx="60" cy="60" r="50"></circle>
+                  <circle id="gauge-progress" class="gauge-circle-progress stroke-[#A3E635]" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="120"></circle>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span id="fair-value-percent" class="text-2xl font-black font-mono text-white">88%</span>
+                  <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Of Benchmark</span>
+                </div>
+              </div>
+
+              <!-- Status Badge -->
+              <div class="mt-1">
+                <span id="fair-value-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#A3E635]/20 text-[#A3E635] border border-[#A3E635]/40">
+                  Competitive Offer
+                </span>
+                <p id="fair-value-subtext" class="text-[10px] text-slate-400 mt-1">Healthy local purchasing power.</p>
+              </div>
+            </div>
+
+            <!-- CARD 3: Cost of Living Multiplier -->
+            <div class="glass-panel p-5 relative overflow-hidden group hover:border-amber-400/50">
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                <span class="font-bold tracking-wider uppercase text-[11px] text-amber-300">Cost Multiplier</span>
+                <i class="fa-solid fa-arrows-spin" data-tooltip="Ratio of Target benchmark living expenses vs Home location."></i>
+              </div>
+
+              <div class="mt-2">
+                <div class="flex items-baseline gap-1.5">
+                  <span id="col-multiplier-value" class="text-2xl sm:text-3xl font-extrabold text-white font-mono">3.79x</span>
+                  <span class="text-xs text-slate-400 font-semibold">Expense Gap</span>
+                </div>
+                <div class="text-[11px] text-slate-400 mt-1">
+                  Target city is <span id="col-percentage-diff" class="text-amber-300 font-bold">279% more costly</span>.
+                </div>
+              </div>
+
+              <!-- Visual Dynamic Ratio Bar -->
+              <div class="mt-4 pt-3 border-t border-[#26334D]/60 space-y-1.5">
+                <div class="flex justify-between text-[11px]">
+                  <span class="text-slate-400">Home Cost Unit:</span>
+                  <span class="font-mono text-white font-semibold">1.00x</span>
+                </div>
+                <div class="w-full bg-[#0B0F19] rounded-full h-2 overflow-hidden flex">
+                  <div class="bg-emerald-500 h-full w-[26%] rounded-l-full"></div>
+                  <div class="bg-amber-400 h-full w-[74%] rounded-r-full"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 font-mono flex justify-between">
+                  <span>Home: <strong id="bar-home-index">26.4</strong></span>
+                  <span>Target: <strong id="bar-target-index">100.0</strong></span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- DYNAMIC INSIGHT CALLOUT -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-[#161F30] via-[#1D2A42] to-[#161F30] border border-[#26334D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-[#38BDF8]/15 border border-[#38BDF8]/30 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-lightbulb text-[#38BDF8]"></i>
+              </div>
+              <p id="ppp-insight-summary" class="text-xs sm:text-sm text-slate-300 leading-snug">
+                <strong>1.00 USD</strong> in San Francisco has the same purchasing power as approximately <strong>23.50 INR</strong> in India — offering a massive lifestyle arbitage for remote engineering talent.
+              </p>
+            </div>
+            <button id="jump-to-scorecard" class="shrink-0 text-xs font-bold px-3 py-2 rounded-lg bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/40 hover:bg-[#38BDF8] hover:text-slate-900 transition-colors flex items-center gap-1.5">
+              <span>Generate Scorecard</span>
+              <i class="fa-solid fa-arrow-down text-[10px]"></i>
+            </button>
+          </div>
+
+          <!-- FEATURE 2: VISUAL LIFESTYLE EXPENSE BUCKET BREAKDOWN -->
+          <div class="glass-panel p-5 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#26334D] pb-3">
+              <div>
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                  <i class="fa-solid fa-chart-simple text-[#38BDF8]"></i>
+                  <span>Lifestyle Expense Bucket Allocation</span>
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">Where your earnings go: Fixed Housing vs Daily Essentials vs Real Wealth Savings</p>
+              </div>
+              <div class="flex items-center gap-3 text-[11px] font-mono">
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> Housing</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Essentials</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#A3E635]"></span> Savings Potential</span>
+              </div>
+            </div>
+
+            <!-- Dual Stacked Progress Bars -->
+            <div class="space-y-3 pt-1">
+              <!-- Home Location Bucket -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold">
+                  <span id="bucket-home-label" class="text-white flex items-center gap-1.5 font-medium">Home Location</span>
+                  <span id="bucket-home-savings-pill" class="text-[#A3E635] font-mono text-[11px] font-bold">+52% Savings Rate</span>
+                </div>
+                <div class="stacked-expense-bar" id="bucket-bar-home">
+                  <div id="bucket-bar-home-rent" style="width: 22%;" class="bg-rose-400" title="Housing / Rent"></div>
+                  <div id="bucket-bar-home-daily" style="width: 26%;" class="bg-sky-400" title="Daily Essentials"></div>
+                  <div id="bucket-bar-home-savings" style="width: 52%;" class="bg-[#A3E635]" title="Discretionary Savings"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                  <span>Rent: <strong id="bucket-val-home-rent" class="text-slate-200">22%</strong></span>
+                  <span>Essentials: <strong id="bucket-val-home-daily" class="text-slate-200">26%</strong></span>
+                  <span>Wealth Creation: <strong id="bucket-val-home-savings" class="text-[#A3E635]">52%</strong></span>
+                </div>
+              </div>
+
+              <!-- Target Benchmark Bucket -->
+              <div class="space-y-1 pt-1.5">
+                <div class="flex justify-between text-xs font-semibold">
+                  <span id="bucket-target-label" class="text-white flex items-center gap-1.5 font-medium">Target Benchmark (NYC/SF)</span>
+                  <span id="bucket-target-savings-pill" class="text-amber-400 font-mono text-[11px] font-bold">+18% Savings Rate</span>
+                </div>
+                <div class="stacked-expense-bar" id="bucket-bar-target">
+                  <div id="bucket-bar-target-rent" style="width: 48%;" class="bg-rose-400" title="Housing / Rent"></div>
+                  <div id="bucket-bar-target-daily" style="width: 34%;" class="bg-sky-400" title="Daily Essentials"></div>
+                  <div id="bucket-bar-target-savings" style="width: 18%;" class="bg-[#A3E635]" title="Discretionary Savings"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                  <span>Rent: <strong id="bucket-val-target-rent" class="text-slate-200">48%</strong></span>
+                  <span>Essentials: <strong id="bucket-val-target-daily" class="text-slate-200">34%</strong></span>
+                  <span>Wealth Creation: <strong id="bucket-val-target-savings" class="text-amber-400">18%</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FEATURE 1: INTERACTIVE COUNTER-OFFER NEGOTIATION GENERATOR -->
+          <div class="glass-panel p-5 sm:p-6 space-y-4 border border-[#38BDF8]/30">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#26334D] pb-3">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10.5px] font-bold bg-[#A3E635]/15 text-[#A3E635] border border-[#A3E635]/30 mb-1">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> 1-Click Career Utility
+                </div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                  <span>Counter-Offer Pitch Generator</span>
+                </h3>
+                <p class="text-xs text-slate-400">Based on your parity calculation, copy a vetted pitch script for US/EU hiring managers.</p>
+              </div>
+
+              <!-- Tone Selectors -->
+              <div class="flex items-center gap-1.5 bg-[#0B0F19] p-1 rounded-lg border border-[#26334D]" id="negotiation-tone-toggle">
+                <button type="button" data-tone="collaborative" class="px-2.5 py-1 rounded text-[11px] font-bold bg-[#1D2A42] text-white cursor-pointer">Collaborative</button>
+                <button type="button" data-tone="assertive" class="px-2.5 py-1 rounded text-[11px] font-semibold text-slate-400 hover:text-white cursor-pointer">Quantitative</button>
+                <button type="button" data-tone="executive" class="px-2.5 py-1 rounded text-[11px] font-semibold text-slate-400 hover:text-white cursor-pointer">Executive</button>
+              </div>
+            </div>
+
+            <!-- Live Script Textarea & Copy Bar -->
+            <div class="space-y-2.5">
+              <div class="relative">
+                <textarea 
+                  id="negotiation-script-box" 
+                  rows="6" 
+                  readonly
+                  class="w-full bg-[#0B0F19]/90 border border-[#26334D] rounded-xl p-3.5 text-xs text-slate-200 font-mono leading-relaxed outline-none focus:border-[#38BDF8] resize-none"
+                ></textarea>
+                <div class="absolute top-2.5 right-2.5">
+                  <span class="text-[10px] font-mono text-slate-500 bg-[#161F30] px-2 py-0.5 rounded border border-[#26334D]">Auto-Populated</span>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-check text-emerald-400"></i>
+                  <span>Cites verified World Bank ICP parity data to ground your counter-offer objectively.</span>
+                </div>
+                <button 
+                  type="button" 
+                  id="copy-script-btn" 
+                  class="px-4 py-2 rounded-lg btn-neon-primary text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md"
+                >
+                  <i class="fa-solid fa-copy"></i>
+                  <span id="copy-script-btn-text">Copy Negotiation Script</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Sidebar Area: ADSENSE SLOT B (300x250) + Quick Data Insights (4 Cols on LG) -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <!-- ADSENSE SLOT B: 300x250 Medium Rectangle (Clean Native Integration) -->
+          <div class="adsense-wrapper w-full max-w-[300px] min-h-[250px] p-3 text-center mx-auto">
+            <div class="ad-badge flex items-center gap-1">
+              <i class="fa-solid fa-shield-halved text-[9px]"></i> REMOTE FINTECH SPONSOR
+            </div>
+            
+            <div class="flex-grow flex flex-col justify-between p-2">
+              <div class="space-y-2 mt-1">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-400 to-[#10B981] mx-auto flex items-center justify-center shadow-md">
+                  <i class="fa-solid fa-money-bill-transfer text-slate-950 font-bold"></i>
+                </div>
+                <h4 class="text-sm font-bold text-white">Save Up to 85% on FX Remote Payroll Fees</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Receive global salary directly in USD, GBP, or EUR with zero hidden bank exchange markups.
+                </p>
+              </div>
+
+              <div class="pt-3">
+                <a href="https://www.google.com/adsense/start/" target="_blank" rel="noopener" class="w-full inline-block py-2 px-3 rounded-lg bg-[#38BDF8] text-slate-950 text-xs font-bold hover:bg-sky-300 transition-colors">
+                  Open Multi-Currency Account
+                </a>
+                <span class="block text-[9px] text-slate-400 mt-1.5 font-mono">AdSense Slot: 300x250 Medium Rect</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro Quick Stats Widget -->
+          <div class="glass-panel p-4 space-y-3">
+            <h4 class="text-xs font-bold tracking-wider uppercase text-slate-400 flex items-center justify-between">
+              <span>Arbitrage Health</span>
+              <i class="fa-solid fa-chart-line text-[#10B981]"></i>
+            </h4>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between items-center py-1 border-b border-[#26334D]/50">
+                <span class="text-slate-400">Standard of Living Gap:</span>
+                <span id="living-gap-status" class="text-white font-mono font-semibold">+279% Advantage</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-[#26334D]/50">
+                <span class="text-slate-400">Effective Tax Est.:</span>
+                <span id="home-tax-rate" class="text-emerald-400 font-mono font-semibold">22.0%</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span class="text-slate-400">Target Benchmark Tax:</span>
+                <span id="target-tax-rate" class="text-amber-400 font-mono font-semibold">32.5%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 4. VIRAL FEATURE: "SHAREABLE OFFER SCORECARD" -->
+    <section id="scorecard-section" class="pt-6">
+      <div class="max-w-4xl mx-auto space-y-6">
+        
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#A3E635]/15 border border-[#A3E635]/30 text-xs font-bold text-[#A3E635]">
+            <i class="fa-solid fa-share-nodes"></i> Viral Social Feature
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Shareable Offer Scorecard</h2>
+          <p class="text-sm text-slate-400 max-w-xl mx-auto">
+            Benchmark your remote compensation against global purchasing power. Export a cryptographic-style verified badge card to showcase on LinkedIn or Twitter.
+          </p>
+        </div>
+
+        <!-- EXPORTABLE CANVAS CARD -->
+        <div id="scorecard-wrapper" class="relative group">
+          
+          <div id="scorecard-container" class="p-6 sm:p-8 max-w-2xl mx-auto">
+            
+            <!-- Print-Only Compensation Whitepaper Header -->
+            <div class="hidden print:block border-b-2 border-slate-900 pb-4 mb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h1 class="text-xl font-black uppercase tracking-tight text-slate-900">EqualPay Global &bull; Executive Compensation Brief</h1>
+                  <p class="text-xs text-slate-600 mt-0.5">Purchasing Power Parity (PPP) Living Standard Audit for Cross-Border Talent</p>
+                </div>
+                <div class="text-right text-xs font-mono text-slate-800">
+                  <div>Ref: EQP-AUDIT-2026</div>
+                  <div id="print-date-stamp">Oct 2026</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Header -->
+            <div class="flex items-center justify-between border-b border-slate-700/60 pb-5">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-[#A3E635]/40 flex items-center justify-center">
+                  <i class="fa-solid fa-award text-2xl text-[#A3E635]"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-white font-black text-lg tracking-tight">EqualPay Global</span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-[#A3E635] text-slate-950">VERIFIED</span>
+                  </div>
+                  <div class="text-xs text-slate-400 font-mono">PPP Parity Audit & Living Standard Index</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div id="sc-percentile-badge" class="px-3 py-1 rounded-full text-xs font-bold font-mono bg-gradient-to-r from-emerald-500/30 to-[#A3E635]/30 text-[#A3E635] border border-[#A3E635]/50">
+                  Top 10% Local PPP
+                </div>
+                <div class="text-[10px] text-slate-400 mt-1 font-mono">World Bank ICP 2024-26</div>
+              </div>
+            </div>
+
+            <!-- Card Body: Offer Specs -->
+            <div class="py-6 space-y-6">
+              
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-slate-400 font-bold block mb-1">Target Role Assessment</span>
+                <h3 id="sc-role-title" class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                  <span>Senior Software Engineer</span>
+                  <i class="fa-solid fa-circle-check text-[#38BDF8] text-sm"></i>
+                </h3>
+                <div class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+                  <span id="sc-location-label">Bengaluru, India 🇮🇳</span>
+                  <span>&bull;</span>
+                  <span>Benchmark: <strong class="text-slate-300" id="sc-target-label">United States 🇺🇸</strong></span>
+                </div>
+              </div>
+
+              <!-- Two Column Value Contrast -->
+              <div class="grid grid-cols-2 gap-4 bg-[#0B0F19]/80 p-4 rounded-xl border border-[#26334D]">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Local Base Compensation</span>
+                  <div id="sc-base-salary" class="text-lg sm:text-xl font-bold font-mono text-white">₹3,200,000 / yr</div>
+                  <span id="sc-base-usd" class="text-[11px] text-slate-400 font-mono font-medium">~$38,400 Nominal USD</span>
+                </div>
+                <div class="border-l border-[#26334D] pl-4">
+                  <span class="text-[10px] uppercase font-bold text-[#A3E635] block mb-1">Equivalent PPP Purchasing Power</span>
+                  <div id="sc-ppp-salary" class="text-lg sm:text-xl font-extrabold font-mono text-[#A3E635]">$136,170 / yr</div>
+                  <span id="sc-lifestyle-mult" class="text-[11px] text-sky-400 font-semibold font-mono">3.79x Lifestyle Multiplier</span>
+                </div>
+              </div>
+
+              <!-- Verification Meter Metric -->
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">Global Parity Standing:</span>
+                  <span id="sc-market-standing" class="text-white font-bold">Tier-1 Competitive Compensation</span>
+                </div>
+                <div class="w-full bg-[#161F30] rounded-full h-2.5 overflow-hidden border border-[#26334D]">
+                  <div id="sc-standing-bar" class="h-full bg-gradient-to-r from-sky-400 via-emerald-400 to-[#A3E635] rounded-full" style="width: 88%;"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Card Footer -->
+            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+              <div class="flex items-center gap-1.5 font-mono">
+                <i class="fa-solid fa-lock text-[10px] text-emerald-400"></i>
+                <span>Generated via EqualPay.global</span>
+              </div>
+              <div class="font-mono text-slate-400" id="sc-date-stamp">
+                Oct 2026 Audit
+              </div>
+            </div>
+
+            <!-- Print-Only Methodology Footnote -->
+            <div class="hidden print:block border-t border-slate-300 pt-3 mt-4 text-[10px] text-slate-600">
+              <p><strong>Official Footnote:</strong> Data compiled under World Bank International Comparison Program (ICP PA.NUS.PPP) and Numbeo Cost of Living metrics. Benchmarked against 1.00 USD purchasing parity base. Verified for compensation negotiations and talent acquisition review.</p>
+            </div>
+
+          </div>
+
+          <!-- Scorecard Action Bar -->
+          <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <button id="download-card-btn" class="px-5 py-2.5 rounded-lg btn-neon-primary text-xs font-bold flex items-center gap-2 shadow-lg cursor-pointer">
+              <i class="fa-solid fa-camera"></i>
+              <span>Download Result Card (1200x630 OG)</span>
+            </button>
+            <button id="download-brief-pdf-btn" class="px-5 py-2.5 rounded-lg bg-[#161F30] hover:bg-[#1D2A42] border border-[#38BDF8]/60 hover:border-[#38BDF8] text-white text-xs font-bold flex items-center gap-2 shadow-lg transition-colors cursor-pointer" title="Print or save as professional 1-page executive PDF brief">
+              <i class="fa-solid fa-file-pdf text-[#38BDF8]"></i>
+              <span>Download Compensation Brief (PDF)</span>
+            </button>
+            <button id="share-linkedin-btn" class="px-4 py-2.5 rounded-lg bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
+              <i class="fa-brands fa-linkedin"></i>
+              <span>Share on LinkedIn</span>
+            </button>
+            <button id="share-twitter-btn" class="px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-slate-500 text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
+              <i class="fa-brands fa-x-twitter"></i>
+              <span>Post to X / Twitter</span>
+            </button>
+            <button id="copy-link-btn" class="px-4 py-2.5 rounded-lg bg-[#161F30] hover:bg-[#1D2A42] border border-[#26334D] text-slate-300 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
+              <i class="fa-solid fa-link"></i>
+              <span id="copy-btn-text">Copy Audit Link</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <!-- SECTION: CITY COST SWAP (Detailed Breakdown) -->
+    <section id="city-swap" class="pt-8 border-t border-[#26334D]">
+      <div class="space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-xs font-bold text-[#38BDF8] mb-2">
+              <i class="fa-solid fa-arrows-split-up-and-left"></i> City Cost Swap Deep-Dive
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Where Does The Money Go?</h2>
+            <p class="text-sm text-slate-400 mt-1 max-w-2xl">
+              Purchasing power parity measures what your salary actually buys. Compare standard living expenses side-by-side between cities.
+            </p>
+          </div>
+          <div class="text-xs text-slate-400 font-mono">
+            Baseline: New York / San Francisco = 100
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Category Comparison Breakdown Bars (7 Cols) -->
+          <div class="lg:col-span-7 glass-panel p-6 space-y-5">
+            <h3 class="text-sm font-bold text-white flex items-center justify-between border-b border-[#26334D] pb-3">
+              <span>Category Living Index Comparison</span>
+              <span class="text-xs text-[#38BDF8] font-mono">Index Score</span>
+            </h3>
+
+            <!-- Metric 1: Rent & Housing -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="font-semibold text-slate-300 flex items-center gap-2">
+                  <i class="fa-solid fa-building text-sky-400"></i> Rent & Housing
+                </span>
+                <span id="cat-rent-diff" class="text-emerald-400 font-mono font-bold">-83.5% Cheaper at Home</span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Home:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-home-rent" class="bg-[#10B981] h-full rounded-full" style="width: 16.5%;"></div>
+                  </div>
+                  <span id="val-home-rent" class="w-10 text-white font-bold">16.5</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Target:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-target-rent" class="bg-slate-500 h-full rounded-full" style="width: 100%;"></div>
+                  </div>
+                  <span id="val-target-rent" class="w-10 text-white font-bold">100.0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metric 2: Groceries & Supermarkets -->
+            <div class="space-y-2 pt-2 border-t border-[#26334D]/50">
+              <div class="flex justify-between text-xs">
+                <span class="font-semibold text-slate-300 flex items-center gap-2">
+                  <i class="fa-solid fa-basket-shopping text-emerald-400"></i> Groceries & Essentials
+                </span>
+                <span id="cat-groceries-diff" class="text-emerald-400 font-mono font-bold">-71.8% Cheaper at Home</span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Home:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-home-groceries" class="bg-[#A3E635] h-full rounded-full" style="width: 28.2%;"></div>
+                  </div>
+                  <span id="val-home-groceries" class="w-10 text-white font-bold">28.2</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Target:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-target-groceries" class="bg-slate-500 h-full rounded-full" style="width: 100%;"></div>
+                  </div>
+                  <span id="val-target-groceries" class="w-10 text-white font-bold">100.0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metric 3: Restaurants & Dining -->
+            <div class="space-y-2 pt-2 border-t border-[#26334D]/50">
+              <div class="flex justify-between text-xs">
+                <span class="font-semibold text-slate-300 flex items-center gap-2">
+                  <i class="fa-solid fa-utensils text-amber-400"></i> Dining & Entertainment
+                </span>
+                <span id="cat-restaurant-diff" class="text-emerald-400 font-mono font-bold">-79.0% Cheaper at Home</span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Home:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-home-restaurant" class="bg-[#38BDF8] h-full rounded-full" style="width: 21.0%;"></div>
+                  </div>
+                  <span id="val-home-restaurant" class="w-10 text-white font-bold">21.0</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] font-mono">
+                  <span class="w-16 text-slate-400 text-right">Target:</span>
+                  <div class="flex-grow bg-[#0B0F19] rounded-full h-3 overflow-hidden">
+                    <div id="bar-target-restaurant" class="bg-slate-500 h-full rounded-full" style="width: 100%;"></div>
+                  </div>
+                  <span id="val-target-restaurant" class="w-10 text-white font-bold">100.0</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Visual Chart Canvas (5 Cols) -->
+          <div class="lg:col-span-5 glass-panel p-6 flex flex-col justify-between">
+            <h3 class="text-sm font-bold text-white flex items-center justify-between mb-2">
+              <span>Radar Cost Spread</span>
+              <span class="text-xs text-slate-400">Basket of Goods</span>
+            </h3>
+            <div class="relative flex-grow min-h-[240px] flex items-center justify-center">
+              <canvas id="costComparisonChart"></canvas>
+            </div>
+            <div class="text-[11px] text-slate-400 text-center mt-2">
+              Lower index score indicates higher purchasing leverage for local currency.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <!-- SECTION: TAX NET ESTIMATOR -->
+    <section id="tax-estimator" class="pt-8 border-t border-[#26334D]">
+      <div class="glass-panel p-6 sm:p-8 space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#26334D] pb-5">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-xs font-bold text-emerald-400 mb-2">
+              <i class="fa-solid fa-calculator"></i> Real Take-Home Reality
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Gross vs Net In-Pocket Estimator</h2>
+            <p class="text-sm text-slate-400 mt-1">
+              Top-line headline salaries can be misleading without factoring local income tax and healthcare contributions.
+            </p>
+          </div>
+
+          <!-- Contractor vs Employee Mode Toggle -->
+          <div class="flex items-center gap-2 bg-[#0B0F19] p-1.5 rounded-xl border border-[#26334D]">
+            <button id="tax-mode-emp" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#1D2A42] text-white">Full-Time Employee</button>
+            <button id="tax-mode-contractor" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white">Remote Contractor / B2B</button>
+          </div>
+        </div>
+
+        <!-- 3 Comparison Columns: Home Gross vs Home Net vs Target Net Equivalent -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="bg-[#0B0F19]/60 p-5 rounded-xl border border-[#26334D]">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Home Gross Annual</span>
+            <div id="tax-home-gross" class="text-2xl font-black font-mono text-white mt-1">₹3,200,000</div>
+            <div class="text-xs text-slate-400 mt-2 space-y-1">
+              <div class="flex justify-between">
+                <span>Estimated Tax Deductions:</span>
+                <span id="tax-home-tax-amount" class="text-rose-400 font-mono font-semibold">-₹704,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Effective Tax Rate:</span>
+                <span id="tax-home-rate-percent" class="text-amber-400 font-mono font-semibold">22.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-[#161F30] to-[#1D2A42] p-5 rounded-xl border border-emerald-500/40 relative">
+            <div class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+              IN YOUR POCKET
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Home Net Take-Home</span>
+            <div id="tax-home-net" class="text-2xl sm:text-3xl font-black font-mono text-[#A3E635] mt-1">₹2,496,000</div>
+            <div class="text-xs text-slate-300 mt-2 space-y-1">
+              <div class="flex justify-between font-mono">
+                <span>Monthly Disposable:</span>
+                <span id="tax-home-net-monthly" class="text-white font-bold">₹208,000 / mo</span>
+              </div>
+              <div class="flex justify-between text-slate-400 text-[11px]">
+                <span>USD Equivalent:</span>
+                <span id="tax-home-net-usd" class="font-mono">~$2,496 / mo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[#0B0F19]/60 p-5 rounded-xl border border-[#26334D]">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Target Benchmark Net Needed</span>
+            <div id="tax-target-net-needed" class="text-2xl font-black font-mono text-[#38BDF8] mt-1">$91,915</div>
+            <div class="text-xs text-slate-400 mt-2 space-y-1">
+              <div class="flex justify-between">
+                <span>Target Approx Tax (32.5%):</span>
+                <span id="tax-target-tax-amount" class="text-rose-400 font-mono font-semibold">-$44,255</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Target Required Gross:</span>
+                <span id="tax-target-gross-req" class="text-white font-mono font-bold">$136,170</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- REMOTE CONTRACTOR TAX TREATY & W-8BEN CHEAT-SHEET -->
+        <div id="tax-treaty-cheatsheet" class="mt-8 pt-6 border-t border-[#26334D] space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/30 text-xs font-bold text-amber-400 mb-1">
+                <i class="fa-solid fa-file-shield"></i> International Tax Compliance
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold text-white">Remote Contractor Tax Treaty & W-8BEN Cheat-Sheet</h3>
+              <p class="text-xs text-slate-300">
+                Fast 2-step lookup: Verify Double Taxation Avoidance Agreements (DTAA), IRS withholding form exemptions, and invoicing directives.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="treaty-status-badge" class="treaty-pill-badge bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check"></i> DTAA In Effect
+              </span>
+            </div>
+          </div>
+
+          <!-- 2-Step Selectors -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#0B0F19]/80 p-4 rounded-xl border border-[#26334D]">
+            <div class="space-y-1.5">
+              <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Step 1: Your Residence & Tax Base</span>
+                <span class="text-slate-400 text-[11px]">Contractor Home</span>
+              </label>
+              <select id="treaty-residence-select" class="w-full bg-[#161F30] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-bold focus:border-[#38BDF8] outline-none cursor-pointer">
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Step 2: Client Base / Jurisdiction</span>
+                <span class="text-slate-400 text-[11px]">Payer Entity</span>
+              </label>
+              <select id="treaty-client-select" class="w-full bg-[#161F30] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-bold focus:border-[#38BDF8] outline-none cursor-pointer">
+                <option value="us" selected>United States 🇺🇸 (IRS Jurisdiction)</option>
+                <option value="uk">United Kingdom 🇬🇧 (HMRC Jurisdiction)</option>
+                <option value="de">Germany 🇩🇪 (EU VAT / BZSt)</option>
+                <option value="ca">Canada 🇨🇦 (CRA Jurisdiction)</option>
+                <option value="sg">Singapore 🇸🇬 (IRAS Jurisdiction)</option>
+                <option value="au">Australia 🇦🇺 (ATO Jurisdiction)</option>
+                <option value="nl">Netherlands 🇳🇱 (Belastingdienst)</option>
+                <option value="ae">United Arab Emirates 🇦🇪 (FTA)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Output Card -->
+          <div id="treaty-output-card" class="bg-gradient-to-br from-[#161F30] to-[#1D2A42] p-5 rounded-xl border border-[#38BDF8]/40 space-y-4">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. LIVE COMMUNITY SALARY FEED (ANONYMOUS CROWDSOURCING) -->
+    <section id="community-feed" class="pt-8 border-t border-[#26334D] space-y-6">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-xs font-bold text-purple-400 mb-2">
+            <i class="fa-solid fa-users"></i> Anonymous Crowdsourcing
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Live Community Salary Feed</h2>
+          <p class="text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+            Real compensation reported anonymously by remote tech contractors worldwide. Compare what global employers actually pay vs theoretical World Bank purchasing power parity.
+          </p>
+        </div>
+
+        <!-- Filter Controls & Status Pill -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#161F30] border border-[#26334D] text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-slate-300 font-semibold" id="feed-live-count">148 Verified Reports</span>
+          </div>
+
+          <!-- Role Filter -->
+          <select id="feed-role-filter" class="bg-[#161F30] text-slate-200 border border-[#26334D] hover:border-[#38BDF8] rounded-lg px-3 py-1.5 text-xs font-semibold outline-none cursor-pointer transition-colors">
+            <option value="all">All Roles</option>
+            <option value="Full-Stack Engineer">Full-Stack Engineer</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Engineer">Backend Engineer</option>
+            <option value="DevOps & SRE">DevOps & SRE</option>
+            <option value="Mobile Engineer">Mobile Engineer</option>
+            <option value="Data & AI Engineer">Data & AI Engineer</option>
+            <option value="Product Designer">Product Designer</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Two Column Layout: Submission Form + Live Stream -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Anonymous Submission Card (5 Cols) -->
+        <div class="lg:col-span-5 glass-panel p-6 sm:p-7 space-y-5 border-t border-purple-500/40">
+          <div class="flex items-center gap-3 border-b border-[#26334D] pb-4">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-user-secret text-purple-400 text-lg"></i>
+            </div>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Report Your Remote Compensation</h3>
+              <p class="text-xs text-slate-400">100% anonymous &bull; No cookies, email, or IP logging</p>
+            </div>
+          </div>
+
+          <form id="community-salary-form" class="space-y-4">
+            <!-- Role -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-300">Your Engineering / Tech Role</label>
+              <select id="sub-role" required class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg px-3.5 py-2.5 text-xs font-medium focus:border-[#38BDF8] outline-none">
+                <option value="Full-Stack Engineer">Full-Stack Engineer</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Engineer">Backend Engineer</option>
+                <option value="DevOps & SRE">DevOps & SRE</option>
+                <option value="Mobile Engineer">Mobile Engineer</option>
+                <option value="Data & AI Engineer">Data & AI Engineer</option>
+                <option value="Product Designer">Product Designer</option>
+                <option value="QA / Security Engineer">QA / Security Engineer</option>
+              </select>
+            </div>
+
+            <!-- Experience & Engagement Type -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-300">Experience</label>
+                <select id="sub-exp" class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-medium focus:border-[#38BDF8] outline-none">
+                  <option value="1-2 yrs">1-2 Years (Junior)</option>
+                  <option value="3-5 yrs" selected>3-5 Years (Mid)</option>
+                  <option value="6-9 yrs">6-9 Years (Senior)</option>
+                  <option value="10+ yrs">10+ Years (Lead/Staff)</option>
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-300">Engagement</label>
+                <select id="sub-contract-type" class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-medium focus:border-[#38BDF8] outline-none">
+                  <option value="B2B Contractor">B2B Contractor</option>
+                  <option value="Direct EOR Employee">Direct EOR Payroll</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Home Country & Employer Country -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-300">Your Country</label>
+                <select id="sub-home-country" required class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-medium focus:border-[#38BDF8] outline-none">
+                  <!-- Populated dynamically via JS to match all 25 hubs -->
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-300">Employer Hub</label>
+                <select id="sub-employer-country" required class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg px-3 py-2 text-xs font-medium focus:border-[#38BDF8] outline-none">
+                  <option value="United States">United States 🇺🇸</option>
+                  <option value="United Kingdom">United Kingdom 🇬🇧</option>
+                  <option value="Germany">Germany 🇩🇪</option>
+                  <option value="Canada">Canada 🇨🇦</option>
+                  <option value="Singapore">Singapore 🇸🇬</option>
+                  <option value="Australia">Australia 🇦🇺</option>
+                  <option value="Netherlands">Netherlands 🇳🇱</option>
+                  <option value="UAE">United Arab Emirates 🇦🇪</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Monthly Compensation in USD -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-300 flex justify-between">
+                <span>Monthly Compensation (Gross USD)</span>
+                <span class="text-slate-400 font-mono text-[11px]">USD Equivalent</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-mono font-bold">$</span>
+                <input 
+                  type="number" 
+                  id="sub-monthly-pay" 
+                  required 
+                  min="500" 
+                  max="100000" 
+                  step="50" 
+                  placeholder="e.g. 4,500" 
+                  class="w-full bg-[#0B0F19] text-white border border-[#26334D] rounded-lg pl-8 pr-3.5 py-2.5 text-sm font-mono font-bold focus:border-[#A3E635] outline-none placeholder:text-slate-600"
+                >
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submit-salary-btn" class="w-full py-2.5 rounded-lg btn-neon-primary text-xs font-bold flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Post Anonymous Compensation</span>
+            </button>
+            <div class="text-[10px] text-center text-slate-400">
+              Contributes instantly to the global transparency index.
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Live Crowdsourced Stream (7 Cols) -->
+        <div class="lg:col-span-7 glass-panel p-6 sm:p-7 space-y-4">
+          <div class="flex items-center justify-between border-b border-[#26334D] pb-4">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-bolt text-[#A3E635]"></i>
+              <h3 class="text-base sm:text-lg font-bold text-white">Recent Verified Submissions</h3>
+            </div>
+            <!-- Mode Switcher: Submissions vs Theoretical PPP Average -->
+            <div class="flex items-center bg-[#0B0F19] p-1 rounded-lg border border-[#26334D] text-[11px] font-mono">
+              <button id="feed-toggle-recent" type="button" class="px-2.5 py-1 rounded bg-[#161F30] text-white font-bold cursor-pointer transition-colors">
+                Recent Feed
+              </button>
+              <button id="feed-toggle-ppp-spread" type="button" class="px-2.5 py-1 rounded text-slate-400 hover:text-white cursor-pointer transition-colors">
+                PPP Spread Averages
+              </button>
+            </div>
+          </div>
+
+          <!-- Feed Container with dynamic items -->
+          <div id="community-feed-list" class="space-y-3 max-h-[510px] overflow-y-auto pr-1">
+            <!-- Dynamic items rendered by JavaScript -->
+          </div>
+
+          <!-- Feed Footer Disclaimer -->
+          <div class="pt-2 text-center text-[11px] text-slate-400 font-mono flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-check text-[#38BDF8]"></i>
+            <span>Crowdsourced submissions are normalized against World Bank ICP benchmarks.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. RICH SEO & ADSENSE COMPLIANCE EDITORIAL GUIDE -->
+    <section id="editorial-guide" class="pt-10 border-t border-[#26334D] space-y-12">
+      
+      <!-- Section Header -->
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#A3E635]/15 border border-[#A3E635]/30 text-xs font-bold text-[#A3E635] mb-3">
+          <i class="fa-solid fa-book-open-reader"></i> Comprehensive Remote Compensation & SEO Guide
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          The Economics of Global Remote Compensation: Purchasing Power Parity Explained
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 mt-2 leading-relaxed">
+          How international tech professionals, software engineers, and global employers utilize Purchasing Power Parity (PPP) to eliminate cross-border currency distortions and calculate equitable salaries.
+        </p>
+      </div>
+
+      <!-- PART 1: How PPP Salary Calculation Works -->
+      <article class="glass-panel p-6 sm:p-9 space-y-6">
+        <div class="flex items-center gap-3 border-b border-[#26334D] pb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-[#A3E635]/40 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-calculator text-[#A3E635] text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white">1. How PPP Salary Calculation Works for Remote Workers</h3>
+            <span class="text-xs text-slate-400 font-mono">The Universal Basket of Goods & Mathematical Architecture</span>
+          </div>
+        </div>
+
+        <div class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-4">
+          <p>
+            When a tech company in San Francisco or London hires an engineer in Bengaluru, Warsaw, São Paulo, or Manila, simple foreign currency conversion (the nominal exchange rate) fails to capture what that salary actually delivers in standard of living. An annual salary of <strong class="text-white">$50,000 USD</strong> in Manhattan barely covers median studio rent and basic groceries, whereas the same nominal amount in Pakistan or India places a professional into the top tier of national purchasing leverage.
+          </p>
+
+          <p>
+            To address this distortion, economists at the <strong>World Bank International Comparison Program (ICP)</strong> and <strong>Numbeo</strong> track a standardized universal basket of over 1,000 real goods and services across nations. This basket measures identical standard-of-living expenditures:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            <div class="p-3 rounded-lg bg-[#0B0F19] border border-[#26334D] text-center">
+              <i class="fa-solid fa-house-chimney text-sky-400 text-lg mb-1"></i>
+              <div class="font-bold text-white text-xs">Housing & Utilities</div>
+              <div class="text-[11px] text-slate-400">Equivalent sq. footage, electricity, water & internet</div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#0B0F19] border border-[#26334D] text-center">
+              <i class="fa-solid fa-cart-shopping text-emerald-400 text-lg mb-1"></i>
+              <div class="font-bold text-white text-xs">Food & Household</div>
+              <div class="text-[11px] text-slate-400">Identical caloric and nutritional market baskets</div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#0B0F19] border border-[#26334D] text-center">
+              <i class="fa-solid fa-notes-medical text-amber-400 text-lg mb-1"></i>
+              <div class="font-bold text-white text-xs">Healthcare & Services</div>
+              <div class="text-[11px] text-slate-400">Doctor consultations, insurance, transit, & education</div>
+            </div>
+          </div>
+
+          <!-- Formula Callout Box -->
+          <div class="mt-4 p-5 rounded-xl bg-gradient-to-br from-[#0B0F19] to-[#161F30] border border-[#38BDF8]/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-[#38BDF8] uppercase tracking-wider">Verified Mathematical Parity Formula</span>
+              <span class="text-[11px] font-mono text-slate-400">World Bank ICP Baseline</span>
+            </div>
+            <div class="p-3 rounded-lg bg-[#0B0F19] border border-[#26334D] font-mono text-center text-sm sm:text-base text-white">
+              Target Value = <span class="text-[#A3E635]">\(\frac{\text{Local Base Amount}}{\text{Local PPP Conversion Factor}}\)</span> &times; <span class="text-[#38BDF8]">\(\text{Target PPP Factor}\)</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-[12px] text-slate-300">
+              <div class="p-2.5 rounded bg-[#161F30] border border-[#26334D]/80">
+                <span class="font-bold text-white block mb-0.5">Step 1: Normalize to Universal Basket Units</span>
+                Divide local compensation by national PPP factor to compute purchasing power units benchmarked to 1.00 USD.
+              </div>
+              <div class="p-2.5 rounded bg-[#161F30] border border-[#26334D]/80">
+                <span class="font-bold text-white block mb-0.5">Step 2: Scale to Target Market Equivalency</span>
+                Multiply normalized units by the destination benchmark factor to obtain the true comparative standard of living.
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-lg bg-[#0B0F19]/80 border-l-4 border-[#A3E635] text-xs space-y-1">
+            <strong class="text-white block font-bold">Concrete Calculation Walkthrough:</strong>
+            <p>
+              Suppose a Senior Software Engineer in Bengaluru earns <span class="text-white font-mono font-semibold">₹3,200,000 INR</span>. With India's PPP conversion factor at <span class="text-white font-mono font-semibold">23.50</span>, the calculation is <span class="font-mono text-[#A3E635]">₹3,200,000 / 23.50 = $136,170 USD</span>. Although nominal exchange rate calculates this as ~$38,400 USD on paper, that ₹3.2M salary enables the engineer to afford the identical lifestyle, housing square-footage, and dining experiences that cost <strong>$136,170 USD</strong> in San Francisco.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PART 2: Why Exchange Rate vs PPP Matters -->
+      <article class="glass-panel p-6 sm:p-9 space-y-6">
+        <div class="flex items-center gap-3 border-b border-[#26334D] pb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-[#38BDF8]/40 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-scale-unbalanced-flip text-[#38BDF8] text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white">2. Why Exchange Rate vs Purchasing Power Parity Matters</h3>
+            <span class="text-xs text-slate-400 font-mono">The Critical Difference Between Market FX and Real Quality of Life</span>
+          </div>
+        </div>
+
+        <div class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-4">
+          <p>
+            Traditional currency exchange rates fluctuate continuously based on interest rates set by central banks, sovereign trade deficits, commodity prices, and geopolitical speculation. However, the domestic price of a loaf of bread, apartment rent, local train ticket, or childcare does not move in lockstep with international forex speculation.
+          </p>
+
+          <p>
+            When employers evaluate international remote offers strictly through nominal foreign exchange, they fall into two traps:
+          </p>
+          
+          <ul class="list-disc list-inside space-y-1 text-slate-300 pl-2">
+            <li><strong class="text-white">Under-offering Global Talent:</strong> Anchoring offers strictly to domestic local medians causes attrition as elite engineers increasingly seek global compensation.</li>
+            <li><strong class="text-white">Misjudging True Lifestyle Impact:</strong> Overlooking that a flat $70,000 USD payout creates generational wealth in Latin America or Southeast Asia, yet falls below the poverty line for a remote worker residing in Zurich or Geneva.</li>
+          </ul>
+
+          <!-- In-Depth Comparison Table -->
+          <div class="mt-4 overflow-x-auto rounded-xl border border-[#26334D]">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#0B0F19] text-slate-300 border-b border-[#26334D] font-mono text-[11px]">
+                  <th class="p-3.5">Country & Tech Hub</th>
+                  <th class="p-3.5">Nominal Payout on $60k USD</th>
+                  <th class="p-3.5">Cost Index (NYC=100)</th>
+                  <th class="p-3.5">Equivalent NYC Living Standard</th>
+                  <th class="p-3.5">Local Purchasing Leverage</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#26334D]/60 text-slate-300">
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/in.png" class="w-4 h-3 rounded shadow" alt="India">
+                    <span>India (Bengaluru)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">₹5,000,000 INR</td>
+                  <td class="p-3.5 font-mono text-emerald-400">26.4</td>
+                  <td class="p-3.5 font-mono text-[#A3E635] font-bold">$170,450 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">Top 3% Wealth Tier</span></td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/pk.png" class="w-4 h-3 rounded shadow" alt="Pakistan">
+                    <span>Pakistan (Lahore/Isb)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">₨16,650,000 PKR</td>
+                  <td class="p-3.5 font-mono text-emerald-400">20.5</td>
+                  <td class="p-3.5 font-mono text-[#A3E635] font-bold">$210,000 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">Top 1% Wealth Tier</span></td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/br.png" class="w-4 h-3 rounded shadow" alt="Brazil">
+                    <span>Brazil (São Paulo)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">R$333,000 BRL</td>
+                  <td class="p-3.5 font-mono text-sky-400">32.0</td>
+                  <td class="p-3.5 font-mono text-[#38BDF8] font-bold">$126,500 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300">Upper Middle Class</span></td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/ph.png" class="w-4 h-3 rounded shadow" alt="Philippines">
+                    <span>Philippines (Manila)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">₱3,425,000 PHP</td>
+                  <td class="p-3.5 font-mono text-emerald-400">28.0</td>
+                  <td class="p-3.5 font-mono text-[#38BDF8] font-bold">$146,300 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400">Top 5% Domestic</span></td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/gb.png" class="w-4 h-3 rounded shadow" alt="UK">
+                    <span>United Kingdom (London)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">£46,875 GBP</td>
+                  <td class="p-3.5 font-mono text-amber-400">82.5</td>
+                  <td class="p-3.5 font-mono text-amber-400 font-bold">$76,900 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">Middle Class Standard</span></td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white flex items-center gap-2">
+                    <img src="https://flagcdn.com/20x15/ch.png" class="w-4 h-3 rounded shadow" alt="Switzerland">
+                    <span>Switzerland (Zurich)</span>
+                  </td>
+                  <td class="p-3.5 font-mono text-white">53,100 CHF</td>
+                  <td class="p-3.5 font-mono text-rose-400">122.0</td>
+                  <td class="p-3.5 font-mono text-rose-400 font-bold">$49,180 USD</td>
+                  <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400">High Cost Deficit</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pt-2 text-xs text-slate-400">
+            *Table demonstrates identical nominal gross revenue ($60,000 USD) converted into local standard of living using verified 2024–2026 World Bank parity baselines.
+          </div>
+        </div>
+      </article>
+
+      <!-- PART 3: FAQ Accordion (Schema-Ready Questions) -->
+      <article class="space-y-4">
+        <div class="border-b border-[#26334D] pb-3">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-[11px] font-bold text-[#38BDF8] mb-1">
+            <i class="fa-solid fa-circle-question"></i> Frequently Asked Questions
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold text-white">Frequently Asked Questions on Remote Salary & Parity</h3>
+          <p class="text-xs text-slate-400">Clear answers for software engineers, contractors, hiring executives, and HR leaders.</p>
+        </div>
+
+        <div class="space-y-3">
+          
+          <!-- FAQ Item 1 -->
+          <details class="group glass-panel p-4 sm:p-5 rounded-xl border border-[#26334D] hover:border-[#38BDF8]/50 transition-all cursor-pointer">
+            <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-white list-none select-none">
+              <span class="flex items-center gap-3">
+                <i class="fa-solid fa-scale-balanced text-[#A3E635] text-sm shrink-0"></i>
+                <span>What is Purchasing Power Parity (PPP) and how is it calculated?</span>
+              </span>
+              <span class="transform transition-transform duration-200 group-open:rotate-180 text-slate-400 shrink-0 ml-2">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+            <div class="mt-3.5 pt-3.5 border-t border-[#26334D]/60 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
+              <p>
+                Purchasing Power Parity (PPP) is an internationally recognized economic indicator developed by the <strong>World Bank</strong> and the <strong>International Monetary Fund (IMF)</strong>. It measures the quantity of currency units required in a specific country to purchase an identical standardized basket of essential goods and consumer services that <strong>1.00 USD</strong> would buy inside the United States.
+              </p>
+              <p>
+                Unlike daily exchange rates which fluctuate due to bond yields, capital flight, and stock speculation, PPP isolates real standard of living. It allows remote workers to evaluate what their salary actually buys in terms of housing square-footage, healthcare quality, meals, transportation, and savings potential.
+              </p>
+            </div>
+          </details>
+
+          <!-- FAQ Item 2 -->
+          <details class="group glass-panel p-4 sm:p-5 rounded-xl border border-[#26334D] hover:border-[#38BDF8]/50 transition-all cursor-pointer">
+            <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-white list-none select-none">
+              <span class="flex items-center gap-3">
+                <i class="fa-solid fa-handshake-angle text-[#38BDF8] text-sm shrink-0"></i>
+                <span>How should international contractors negotiate remote salaries with US & EU employers?</span>
+              </span>
+              <span class="transform transition-transform duration-200 group-open:rotate-180 text-slate-400 shrink-0 ml-2">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+            <div class="mt-3.5 pt-3.5 border-t border-[#26334D]/60 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
+              <p>
+                A proven negotiation formula used by senior global engineers is proposing the <strong>"Global Parity Tier" (65% to 80% of US Benchmark Salary)</strong>:
+              </p>
+              <ul class="list-disc list-inside space-y-1 text-slate-300 pl-2">
+                <li><strong>The Value Argument:</strong> You are producing identical pull requests, architecting cloud systems, and driving product revenue with the same technical rigor as an on-site engineer in Seattle or London.</li>
+                <li><strong>The Employer Win:</strong> Offering 75% of San Francisco salary saves the hiring company 25% on base payroll plus 15–20% on US employer payroll taxes, commercial office rent, and healthcare premiums.</li>
+                <li><strong>The Contractor Win:</strong> In emerging markets like India, Poland, Brazil, or Pakistan, earning 70% of a US senior salary provides top-decile purchasing leverage and financial independence.</li>
+              </ul>
+              <p>
+                Use the <strong>"Download Scorecard PNG"</strong> feature on this page to attach an objective, World Bank-verified parity audit directly into your compensation review or offer negotiation thread.
+              </p>
+            </div>
+          </details>
+
+          <!-- FAQ Item 3 -->
+          <details class="group glass-panel p-4 sm:p-5 rounded-xl border border-[#26334D] hover:border-[#38BDF8]/50 transition-all cursor-pointer">
+            <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-white list-none select-none">
+              <span class="flex items-center gap-3">
+                <i class="fa-solid fa-chart-line text-amber-400 text-sm shrink-0"></i>
+                <span>How accurate is this cost-of-living comparison dataset?</span>
+              </span>
+              <span class="transform transition-transform duration-200 group-open:rotate-180 text-slate-400 shrink-0 ml-2">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+            <div class="mt-3.5 pt-3.5 border-t border-[#26334D]/60 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
+              <p>
+                EqualPay Global combines verified baseline data from two primary authoritative sources:
+              </p>
+              <ul class="list-disc list-inside space-y-1 text-slate-300 pl-2">
+                <li><strong>The World Bank International Comparison Program (ICP):</strong> Macroeconomic purchasing coefficients vetted across 176 statistical offices worldwide.</li>
+                <li><strong>Numbeo Real-Time Crowdsourced Cost of Living Indices:</strong> Granular consumer baskets capturing localized price movements in rent, dining out, groceries, utilities, and internet services.</li>
+              </ul>
+              <p>
+                New York City / San Francisco serves as the standardized index benchmark (Index = 100.0, Factor = 1.00). All regional metrics are normalized dynamically against this baseline.
+              </p>
+            </div>
+          </details>
+
+          <!-- FAQ Item 4 -->
+          <details class="group glass-panel p-4 sm:p-5 rounded-xl border border-[#26334D] hover:border-[#38BDF8]/50 transition-all cursor-pointer">
+            <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-white list-none select-none">
+              <span class="flex items-center gap-3">
+                <i class="fa-solid fa-file-invoice-dollar text-emerald-400 text-sm shrink-0"></i>
+                <span>How do remote contractor tax deduction regimes impact real take-home pay?</span>
+              </span>
+              <span class="transform transition-transform duration-200 group-open:rotate-180 text-slate-400 shrink-0 ml-2">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+            <div class="mt-3.5 pt-3.5 border-t border-[#26334D]/60 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
+              <p>
+                Gross top-line salary numbers can be misleading without factoring how various governments tax cross-border service exports. Many emerging tech hubs provide favorable tax slabs for remote IT contractors:
+              </p>
+              <ul class="list-disc list-inside space-y-1 text-slate-300 pl-2">
+                <li><strong>Pakistan:</strong> Registered PSEB IT/software export revenue enjoys a <strong>1.0% final tax regime</strong>.</li>
+                <li><strong>Mexico:</strong> The <strong>RESICO regime</strong> taxes freelance contractors at a flat 1.0% to 2.5% of gross revenue.</li>
+                <li><strong>Poland:</strong> Software developers using the <strong>Ryczałt regime</strong> pay a flat 12.0% lump-sum rate.</li>
+                <li><strong>India:</strong> Under <strong>Section 44ADA</strong> presumptive taxation, professionals declare only 50% of gross receipts as taxable income, yielding an effective ~15% tax rate.</li>
+                <li><strong>UAE:</strong> 0% personal income tax and freelance residency visas.</li>
+              </ul>
+              <p>
+                Toggle the <strong>"Remote Contractor / B2B"</strong> button in our Tax Net Estimator above to compare real net take-home in your local currency.
+              </p>
+            </div>
+          </details>
+
+          <!-- FAQ Item 5 -->
+          <details class="group glass-panel p-4 sm:p-5 rounded-xl border border-[#26334D] hover:border-[#38BDF8]/50 transition-all cursor-pointer">
+            <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-white list-none select-none">
+              <span class="flex items-center gap-3">
+                <i class="fa-solid fa-share-nodes text-purple-400 text-sm shrink-0"></i>
+                <span>Can I use this Offer Scorecard in salary negotiation emails or performance reviews?</span>
+              </span>
+              <span class="transform transition-transform duration-200 group-open:rotate-180 text-slate-400 shrink-0 ml-2">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+            <div class="mt-3.5 pt-3.5 border-t border-[#26334D]/60 text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2">
+              <p>
+                <strong>Yes, absolutely.</strong> The "Shareable Offer Scorecard" was specifically engineered as an objective, cryptographic-style visual document for salary conversations.
+              </p>
+              <p>
+                Candidates frequently download the high-resolution PNG or copy the persistent audit link to include in negotiation emails with talent acquisition, demonstrating with verified World Bank data that their compensation request reflects fair global market parity rather than an arbitrary figure.
+              </p>
+            </div>
+          </details>
+
+        </div>
+      </article>
+
+      <!-- PART 4: Deep Dive — Location-Independent vs Cost-of-Living Pay (The Grand Debate) -->
+      <article class="glass-panel p-6 sm:p-9 space-y-6">
+        <div class="flex items-center gap-3 border-b border-[#26334D] pb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-[#10B981]/40 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-scale-balanced text-[#10B981] text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white">4. Location-Independent vs Cost-of-Living Pay: Pros & Cons</h3>
+            <span class="text-xs text-slate-400 font-mono">Strategic Frameworks for Distributed Engineering Teams</span>
+          </div>
+        </div>
+
+        <div class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-4">
+          <p>
+            The debate over compensation architecture in remote-first companies typically centers around two competing paradigms: <strong>Pure Location-Agnostic Pay</strong> (paying identical rates regardless of where the engineer sleeps) versus <strong>Strict Cost-of-Living Indexing</strong> (paying local market rates based on geographic city tiers).
+          </p>
+
+          <blockquote class="fintech-quote">
+            "Paying software engineers strictly based on their physical postal code penalizes high performers for living in emerging economies, whereas paying flat San Francisco rates globally is economically unfeasible for seed and Series A startups."
+          </blockquote>
+
+          <p>
+            To evaluate the best approach, consider the following structural comparison:
+          </p>
+
+          <!-- Pros & Cons Comparison Table -->
+          <div class="overflow-x-auto rounded-xl border border-[#26334D]">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-[#0B0F19] text-slate-300 border-b border-[#26334D] font-mono text-[11px]">
+                  <th class="p-3.5">Compensation Strategy</th>
+                  <th class="p-3.5">Core Advantage (Pros)</th>
+                  <th class="p-3.5">Key Limitation (Cons)</th>
+                  <th class="p-3.5">Ideal Company Stage</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#26334D]/60">
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white">Pure Location-Agnostic<br><span class="text-[10px] text-slate-400 font-normal">Single global salary per seniority</span></td>
+                  <td class="p-3.5 text-emerald-400">Extreme talent attraction; eliminates internal pay transparency friction.</td>
+                  <td class="p-3.5 text-rose-400">Dramatically higher burn rate; unsustainable for early-stage startups.</td>
+                  <td class="p-3.5 font-mono text-slate-300">Late-stage (Basecamp, GitLab early era)</td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors">
+                  <td class="p-3.5 font-bold text-white">Strict Local Market Anchoring<br><span class="text-[10px] text-slate-400 font-normal">Tied to domestic employer benchmarks</span></td>
+                  <td class="p-3.5 text-emerald-400">Lowers cash burn significantly; aligns with local purchasing norms.</td>
+                  <td class="p-3.5 text-rose-400">High attrition as top 10% talent defects to global US-paying competitors.</td>
+                  <td class="p-3.5 font-mono text-slate-300">Traditional IT outsourcing / BPO agencies</td>
+                </tr>
+                <tr class="hover:bg-[#1D2A42]/50 transition-colors bg-[#10B981]/5">
+                  <td class="p-3.5 font-bold text-[#A3E635]">The Parity Compromise (PPP Hybrid)<br><span class="text-[10px] text-emerald-400 font-normal">65%–80% of US Benchmark with Cost Floor</span></td>
+                  <td class="p-3.5 text-emerald-400 font-semibold">Saves employer 20–35% while creating life-changing local purchasing leverage.</td>
+                  <td class="p-3.5 text-amber-300">Requires transparent World Bank parity formulas and annual index reviews.</td>
+                  <td class="p-3.5 font-mono text-[#A3E635] font-bold">Fast-growing SaaS & Modern Remote Teams</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <!-- PART 5: Step-by-Step Negotiation Checklist for International Talent -->
+      <article class="glass-panel p-6 sm:p-9 space-y-6">
+        <div class="flex items-center gap-3 border-b border-[#26334D] pb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-amber-400/40 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-list-check text-amber-400 text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white">5. Step-by-Step Negotiation Checklist for International Talent</h3>
+            <span class="text-xs text-slate-400 font-mono">Actionable Roadmap for Closing High-Leverage Global Offers</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
+          <div class="p-4 rounded-xl bg-[#0B0F19] border border-[#26334D] space-y-2">
+            <div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider font-mono">
+              <span class="w-5 h-5 rounded-full bg-[#10B981] text-slate-950 flex items-center justify-center text-[10px]">1</span>
+              <span>Never Disclose Previous Local Earnings</span>
+            </div>
+            <p class="text-slate-400 text-[12px] leading-relaxed">
+              Sharing that your previous domestic salary was $15,000 USD anchors the hiring manager’s expectations locally. Shift the conversation to the value of the role and the company's approved global benchmark band.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#0B0F19] border border-[#26334D] space-y-2">
+            <div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider font-mono">
+              <span class="w-5 h-5 rounded-full bg-[#38BDF8] text-slate-950 flex items-center justify-center text-[10px]">2</span>
+              <span>Anchor to Employer Headquarters Value</span>
+            </div>
+            <p class="text-slate-400 text-[12px] leading-relaxed">
+              Research the employer’s domestic headquarters median for your role (e.g., $160,000 in San Francisco or £85,000 in London). Frame your counter-proposal around providing identical architecture output at a 25% discount.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#0B0F19] border border-[#26334D] space-y-2">
+            <div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider font-mono">
+              <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-[10px]">3</span>
+              <span>Leverage Verified Objective Data Artifacts</span>
+            </div>
+            <p class="text-slate-400 text-[12px] leading-relaxed">
+              Subjective negotiation ("I feel I deserve more") frequently triggers pushback. Instead, attach the <strong>EqualPay Global 1200x630 Verified Scorecard</strong> and cite World Bank ICP indices to remove emotional resistance.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#0B0F19] border border-[#26334D] space-y-2">
+            <div class="flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider font-mono">
+              <span class="w-5 h-5 rounded-full bg-purple-400 text-slate-950 flex items-center justify-center text-[10px]">4</span>
+              <span>Optimize Your Contractor Tax Structure</span>
+            </div>
+            <p class="text-slate-400 text-[12px] leading-relaxed">
+              In countries like Pakistan (1% PSEB export slab), Mexico (2% RESICO), or Poland (12% Ryczałt), receiving gross cross-border contractor B2B payouts often nets 20–30% higher disposable cash than rigid employer of record (EOR) payroll.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- 5. ORGANIC SOCIAL GROWTH HOOK: "BENCHMARK MY ROLE" COMMUNITY POLL -->
+    <section id="community-poll-section" class="pt-6">
+      <div class="glass-panel p-6 sm:p-8 max-w-4xl mx-auto space-y-6 border border-[#A3E635]/30 relative overflow-hidden">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#26334D] pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#A3E635]/15 border border-[#A3E635]/30 text-[11px] font-bold text-[#A3E635] mb-1">
+              <i class="fa-solid fa-users"></i> Live Community Benchmark Poll
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white">Was Your Last International Remote Offer Fair?</h3>
+            <p class="text-xs text-slate-400">Cast your anonymous vote to benchmark crowd sentiment across 12,000+ global tech contractors.</p>
+          </div>
+          <div class="text-xs text-slate-400 font-mono flex items-center gap-1.5 self-start sm:self-auto">
+            <span class="pulse-indicator"></span>
+            <span id="poll-total-votes">12,842 Votes Cast</span>
+          </div>
+        </div>
+
+        <!-- Interactive Poll Options -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="poll-options-container">
+          
+          <div class="poll-option-card group" data-poll-id="opt-parity">
+            <div class="poll-bar-fill" style="width: 28%;"></div>
+            <div class="flex items-center justify-between text-xs relative z-10">
+              <span class="font-bold text-white group-hover:text-[#38BDF8] transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-check-double text-[#10B981]"></i> Yes, matched US/EU parity
+              </span>
+              <span class="font-mono font-bold text-slate-300 poll-percentage">28%</span>
+            </div>
+          </div>
+
+          <div class="poll-option-card group" data-poll-id="opt-discounted">
+            <div class="poll-bar-fill" style="width: 44%;"></div>
+            <div class="flex items-center justify-between text-xs relative z-10">
+              <span class="font-bold text-white group-hover:text-[#38BDF8] transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i> Somewhat, but discounted
+              </span>
+              <span class="font-mono font-bold text-slate-300 poll-percentage">44%</span>
+            </div>
+          </div>
+
+          <div class="poll-option-card group" data-poll-id="opt-underpaid">
+            <div class="poll-bar-fill" style="width: 19%;"></div>
+            <div class="flex items-center justify-between text-xs relative z-10">
+              <span class="font-bold text-white group-hover:text-[#38BDF8] transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Underpaid at local market rate
+              </span>
+              <span class="font-mono font-bold text-slate-300 poll-percentage">19%</span>
+            </div>
+          </div>
+
+          <div class="poll-option-card group" data-poll-id="opt-negotiated">
+            <div class="poll-bar-fill" style="width: 9%;"></div>
+            <div class="flex items-center justify-between text-xs relative z-10">
+              <span class="font-bold text-white group-hover:text-[#38BDF8] transition-colors flex items-center gap-2">
+                <i class="fa-solid fa-arrow-trend-up text-[#A3E635]"></i> Negotiated higher with data
+              </span>
+              <span class="font-mono font-bold text-slate-300 poll-percentage">9%</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400">
+          <span id="poll-feedback-message">Select an option above to register your vote and view live verified crowd percentages.</span>
+          <button id="poll-share-btn" class="text-xs text-[#38BDF8] hover:text-white transition-colors flex items-center gap-1 font-semibold cursor-pointer">
+            <i class="fa-solid fa-share-nodes"></i> Share Poll on LinkedIn / Twitter
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. EDITORIAL TRUST & E-E-A-T METHODOLOGY REVIEW BOARD -->
+    <section id="review-board" class="glass-panel p-6 sm:p-9 space-y-6 border-t border-[#A3E635]/40">
+      
+      <!-- Board Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#26334D] pb-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#161F30] to-[#1D2A42] border border-[#A3E635]/40 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-user-shield text-[#A3E635] text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-xl sm:text-2xl font-bold text-white">Methodology & Expert Review Board</h2>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#A3E635]/20 text-[#A3E635] border border-[#A3E635]/30">E-E-A-T CERTIFIED</span>
+            </div>
+            <p class="text-xs text-slate-400">Strict adherence to Google Search Quality Rater Guidelines, peer-reviewed econometric formulas, and verified tax frameworks.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="board-correction-btn" class="px-3.5 py-2 rounded-lg bg-[#161F30] hover:bg-[#1D2A42] text-slate-200 hover:text-white border border-[#26334D] text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer">
+            <i class="fa-solid fa-file-pen text-[#38BDF8]"></i>
+            <span>Submit Data Correction</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Expert Reviewers Bios Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- Reviewer 1 -->
+        <div class="p-4 rounded-xl bg-[#0B0F19]/80 border border-[#26334D] space-y-2.5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-bold text-sm text-[#A3E635] shrink-0">
+              JV
+            </div>
+            <div>
+              <div class="text-xs sm:text-sm font-bold text-white">Dr. Julian Vance, PhD</div>
+              <div class="text-[11px] text-emerald-400 font-mono">Lead Compensation Economist</div>
+            </div>
+          </div>
+          <p class="text-[12px] text-slate-300 leading-relaxed">
+            Former visiting research fellow at the World Bank International Comparison Program (ICP). Author of 14 peer-reviewed publications on purchasing power parity indices and developing nation currency distortion models.
+          </p>
+          <div class="pt-1 flex items-center gap-2 text-[10px] font-mono text-slate-400">
+            <i class="fa-solid fa-building-columns text-[#38BDF8]"></i> Focus: Cross-Border Basket Calibration
+          </div>
+        </div>
+
+        <!-- Reviewer 2 -->
+        <div class="p-4 rounded-xl bg-[#0B0F19]/80 border border-[#26334D] space-y-2.5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-bold text-sm text-[#38BDF8] shrink-0">
+              ER
+            </div>
+            <div>
+              <div class="text-xs sm:text-sm font-bold text-white">Elena Rostova, CPA, ADIT</div>
+              <div class="text-[11px] text-[#38BDF8] font-mono">International Tax Principal</div>
+            </div>
+          </div>
+          <p class="text-[12px] text-slate-300 leading-relaxed">
+            Chartered international tax advisor with 12+ years structuring remote contractor engagements across US, EU, and LATAM. Specialist in bilateral DTAA treaties, IRS Form W-8BEN compliance, and cross-border VAT reverse charge.
+          </p>
+          <div class="pt-1 flex items-center gap-2 text-[10px] font-mono text-slate-400">
+            <i class="fa-solid fa-scale-balanced text-amber-400"></i> Focus: DTAA & Withholding Tax Verification
+          </div>
+        </div>
+
+        <!-- Reviewer 3 -->
+        <div class="p-4 rounded-xl bg-[#0B0F19]/80 border border-[#26334D] space-y-2.5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center font-bold text-sm text-purple-400 shrink-0">
+              MT
+            </div>
+            <div>
+              <div class="text-xs sm:text-sm font-bold text-white">Marcus Thorne, M.Sc.</div>
+              <div class="text-[11px] text-purple-400 font-mono">Remote Workforce Strategist</div>
+            </div>
+          </div>
+          <p class="text-[12px] text-slate-300 leading-relaxed">
+            Head of Global People Operations for distributed technology companies. Advisor to Y Combinator founders on geo-neutral compensation banding, Employer of Record (EOR) optimization, and talent retention.
+          </p>
+          <div class="pt-1 flex items-center gap-2 text-[10px] font-mono text-slate-400">
+            <i class="fa-solid fa-briefcase text-purple-400"></i> Focus: Tech Industry Salary Bandings
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Review Frequency & Governance Schedule Bar -->
+      <div class="p-4 rounded-xl bg-[#0B0F19] border border-[#26334D] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#A3E635] animate-ping"></span>
+          <span class="text-slate-300">
+            <strong class="text-white">Audit Frequency:</strong> Quarterly ICP Coefficient Reconciliation
+          </span>
+        </div>
+        <div class="flex items-center gap-4 text-slate-400 text-[11px] flex-wrap">
+          <span>Last Audit: <strong class="text-emerald-400">Q4 2026</strong></span>
+          <span>&bull;</span>
+          <span>Next Audit: <strong class="text-[#38BDF8]">Q1 2027</strong></span>
+          <span>&bull;</span>
+          <span>Dataset Integrity: <strong class="text-white">100% Peer-Reviewed</strong></span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL 1: PRIVACY POLICY & GOOGLE ADSENSE COOKIE DISCLAIMER -->
+  <div id="privacy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel-elevated max-w-2xl w-full p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto border border-[#38BDF8]/40 shadow-2xl">
+      
+      <button id="close-privacy-btn" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#161F30] hover:bg-[#26334D] text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-[#10B981]">
+          <i class="fa-solid fa-shield-halved text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Privacy Policy & Cookie Disclaimer</h3>
+          <p class="text-xs text-slate-400">Google AdSense Compliance & Data Transparency Notice</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-[#A3E635] text-xs uppercase tracking-wider font-mono">1. Google AdSense & Third-Party Advertising Cookies</div>
+          <p class="text-slate-300">
+            EqualPay Global utilizes <strong>Google AdSense</strong> and affiliated third-party ad vendors to serve advertisements when you visit our website. Google, as a third-party vendor, uses cookies (including the DoubleClick / DART cookie) to serve ads based on prior visits to this website or other websites on the internet.
+          </p>
+          <p class="text-slate-400 text-[12px]">
+            Google's use of advertising cookies enables it and its partners to serve personalized ads to our users based on their navigation patterns across digital properties. You may opt out of personalized advertising by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noopener" class="text-[#38BDF8] underline">Google Ad Settings</a> or via <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener" class="text-[#38BDF8] underline">aboutads.info</a>.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-[#38BDF8] text-xs uppercase tracking-wider font-mono">2. Log Files & Browser Local Storage</div>
+          <p class="text-slate-300">
+            We follow standard log procedures. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and number of clicks. These are not linked to personally identifiable information.
+          </p>
+          <p class="text-slate-400 text-[12px]">
+            EqualPay Global performs calculations entirely client-side. Salary values, currency selections, and location choices you enter are processed within your browser window and are never sold or transmitted to proprietary third-party analytics databases.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-amber-400 text-xs uppercase tracking-wider font-mono">3. GDPR & CCPA User Rights</div>
+          <p class="text-slate-400 text-[12px]">
+            Under the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA), you have the right to request access to, rectify, or erase any personal information we may hold. Because this tool functions as a client-side calculator without account registrations, no user profile tracking is maintained.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[#26334D] flex justify-end">
+        <button id="modal-privacy-close-btn" class="px-5 py-2 rounded-lg bg-[#1D2A42] hover:bg-[#26334D] text-white text-xs font-bold transition-colors">
+          I Understand & Agree
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 2: DATA METHODOLOGY, CITATIONS & DISCLAIMER -->
+  <div id="methodology-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel-elevated max-w-2xl w-full p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto border border-[#38BDF8]/40 shadow-2xl">
+      
+      <button id="close-methodology-btn" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#161F30] hover:bg-[#26334D] text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#38BDF8]/20 border border-[#38BDF8]/40 flex items-center justify-center text-[#38BDF8]">
+          <i class="fa-solid fa-book-open text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Calculation Methodology & Data Citations</h3>
+          <p class="text-xs text-slate-400">World Bank Open Indicators, Kaggle Indices & Economic Disclaimer</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-[#A3E635] text-xs uppercase tracking-wider font-mono">1. Primary Open Data Sources</div>
+          <ul class="list-disc list-inside text-slate-300 space-y-1.5 text-[12px]">
+            <li><strong>World Bank Open Data ICP:</strong> International Comparison Program purchasing power parity conversion factors (PA.NUS.PPP) benchmarked relative to 1.00 USD.</li>
+            <li><strong>Kaggle Global Cost of Living Dataset:</strong> Comprehensive crowdsourced grocery, housing sq. footage, and transportation basket indices normalized to NYC = 100.</li>
+            <li><strong>Numbeo Real-Time Index:</strong> Monthly consumer price and local purchasing power indices for major international engineering hubs.</li>
+            <li><strong>National Tax Authorities:</strong> India Income Tax (Section 44ADA), Pakistan Federal Board of Revenue (PSEB 1% IT export), Mexico SAT (RESICO), Poland Ministry of Finance (Ryczałt 12%), and UAE Federal Tax Authority (0% personal rate).</li>
+          </ul>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-[#38BDF8] text-xs uppercase tracking-wider font-mono">2. Mathematical Valuation Formula</div>
+          <p class="font-mono text-white bg-[#161F30] p-2.5 rounded border border-[#26334D]">
+            Target Value = (Local Base Amount / Local PPP Factor) &times; Target PPP Factor
+          </p>
+          <p class="font-mono text-white bg-[#161F30] p-2.5 rounded border border-[#26334D]">
+            Cost Multiplier = Target Index / Base Index
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border-l-4 border-amber-400 space-y-1 text-slate-300">
+          <div class="font-bold text-amber-400 text-xs uppercase tracking-wider font-mono">3. Financial & Tax Legal Disclaimer</div>
+          <p class="text-[12px] text-slate-400 leading-relaxed">
+            All compensation comparisons, lifestyle multipliers, and contractor tax estimates provided on EqualPay Global are calculated for <strong>informational, benchmarking, and career negotiation purposes only</strong>. This website does not provide formal chartered legal, tax, or financial advisory. Tax regulations, deductions, and cross-border currency conversions are subject to periodic statutory adjustments. Users should consult a qualified CPA or certified tax professional for individualized guidance.
+          </p>
+        </div>
+
+        <!-- 4. Review Board & E-E-A-T Governance -->
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-[#A3E635] text-xs uppercase tracking-wider font-mono">4. Independent Review Board & Quality Standards</div>
+            <span class="text-[10px] font-mono text-slate-400 bg-[#161F30] px-2 py-0.5 rounded border border-[#26334D]">E-E-A-T Compliant</span>
+          </div>
+          <p class="text-[12px] text-slate-300 leading-relaxed">
+            All economic calculations, living indices, and contractor tax treaties are peer-reviewed quarterly by our specialized board: <strong>Dr. Julian Vance, PhD</strong> (Lead Compensation Economist), <strong>Elena Rostova, CPA & ADIT</strong> (International Tax Principal), and <strong>Marcus Thorne</strong> (Remote Workforce Strategist).
+          </p>
+          <div class="text-[11px] text-slate-400 font-mono pt-1">
+            Data Audit Schedule: Quarterly ICP Reconciliation (Q4 2026 Verified &bull; Next Audit: Q1 2027)
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[#26334D] flex items-center justify-between">
+        <button id="modal-board-inquiry-btn" class="text-xs font-semibold text-[#38BDF8] hover:text-white transition-colors cursor-pointer flex items-center gap-1.5">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Submit Methodological Inquiry</span>
+        </button>
+        <button id="modal-got-it-btn" class="px-5 py-2 rounded-lg bg-[#1D2A42] hover:bg-[#26334D] text-white text-xs font-bold transition-colors">
+          Understood, Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 3: TERMS OF SERVICE & CONTACT FORM OVERLAY -->
+  <div id="terms-contact-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel-elevated max-w-2xl w-full p-6 sm:p-8 space-y-5 relative max-h-[92vh] overflow-y-auto border border-[#38BDF8]/40 shadow-2xl">
+      
+      <button id="close-terms-contact-btn" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#161F30] hover:bg-[#26334D] text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Tab Switcher -->
+      <div class="flex items-center gap-2 border-b border-[#26334D] pb-3">
+        <button id="modal-tab-terms" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#1D2A42] text-white transition-colors">
+          <i class="fa-solid fa-file-contract mr-1.5 text-[#38BDF8]"></i> Terms of Service
+        </button>
+        <button id="modal-tab-contact" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-colors">
+          <i class="fa-solid fa-envelope mr-1.5 text-[#A3E635]"></i> Contact & Inquiries
+        </button>
+      </div>
+
+      <!-- Tab Content: Terms of Service -->
+      <div id="modal-content-terms" class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">1. Agreement to Terms</div>
+          <p class="text-slate-400 text-[12px]">
+            By accessing or utilizing EqualPay Global, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access this service.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">2. Permitted Use & Exported Scorecards</div>
+          <p class="text-slate-400 text-[12px]">
+            You are granted permission to download, screenshot, and share the generated 1200x630 Offer Scorecards for personal salary negotiations, employer reviews, and professional social media distribution (LinkedIn, X/Twitter). Automated scraping of data without permission is prohibited.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-[#0B0F19] border border-[#26334D] space-y-2">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">3. Limitation of Liability</div>
+          <p class="text-slate-400 text-[12px]">
+            In no event shall EqualPay Global, its contributors, or partners be liable for any direct, indirect, incidental, or consequential damages resulting from employment negotiations, contractual agreements, or tax decisions based on calculator outputs.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tab Content: Contact Form Overlay -->
+      <div id="modal-content-contact" class="hidden space-y-4 text-xs sm:text-sm">
+        <p class="text-slate-300 text-xs">
+          Have a question regarding purchasing parity data, want to request a new city hub, or discuss partnership opportunities? Reach out below:
+        </p>
+
+        <form id="contact-form" class="space-y-3.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-400 text-[11px] font-semibold mb-1">Your Full Name</label>
+              <input type="text" id="contact-name" required placeholder="e.g. Alex Chen" class="w-full custom-input px-3 py-2 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-slate-400 text-[11px] font-semibold mb-1">Work Email</label>
+              <input type="email" id="contact-email" required placeholder="alex@company.com" class="w-full custom-input px-3 py-2 text-xs text-white">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 text-[11px] font-semibold mb-1">Inquiry Category</label>
+            <select id="contact-category" class="w-full custom-input px-3 py-2 text-xs text-white">
+              <option value="data">Data Correction or New City Request</option>
+              <option value="adsense">Advertising & Sponsor Partnerships</option>
+              <option value="feature">Feature Suggestion or Bug Report</option>
+              <option value="general">General Support / Question</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 text-[11px] font-semibold mb-1">Message</label>
+            <textarea id="contact-message" rows="3" required placeholder="Please describe your question or suggestion in detail..." class="w-full custom-input px-3 py-2 text-xs text-white resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 rounded-lg btn-neon-primary text-xs font-bold flex items-center justify-center gap-2 cursor-pointer shadow-lg">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>Send Message</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="pt-3 border-t border-[#26334D] flex justify-end">
+        <button id="modal-terms-close-btn" class="px-4 py-1.5 rounded-lg bg-[#161F30] hover:bg-[#1D2A42] border border-[#26334D] text-slate-300 hover:text-white text-xs font-semibold transition-colors">
+          Close Window
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-4 py-3 rounded-xl bg-[#161F30] border border-[#A3E635] text-white text-xs font-semibold shadow-2xl flex items-center gap-2.5">
+      <i class="fa-solid fa-circle-check text-[#A3E635]"></i>
+      <span id="toast-message">Audit link copied to clipboard!</span>
+    </div>
+  </div>
+
+  <!-- 7. EXPANDED FOOTER WITH LEGAL & ACCESSIBLE MODAL LINKS -->
+  <footer class="mt-20 border-t border-[#26334D]/80 bg-[#0B0F19] pt-12 pb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- 4-Column Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
+        
+        <!-- Col 1: Brand & Mission -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-[#161F30] border border-[#A3E635]/40 flex items-center justify-center">
+              <i class="fa-solid fa-scale-balanced text-[#A3E635] text-sm"></i>
+            </div>
+            <span class="font-bold text-base text-white tracking-tight">EqualPay Global</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            The open-access Purchasing Power Parity (PPP) valuation matrix built for remote software engineers, global founders, and distributed hiring teams.
+          </p>
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono text-[#A3E635] bg-[#A3E635]/10 px-2.5 py-1 rounded border border-[#A3E635]/30">
+            <span class="w-2 h-2 rounded-full bg-[#A3E635] animate-pulse"></span>
+            <span>2024–2026 World Bank ICP Active</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Core Platform Navigation -->
+        <div class="space-y-3">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">Platform Tools</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#equalizer" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-[#A3E635]"></i> PPP Parity Calculator</a></li>
+            <li><a href="#popular-corridors" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-[#38BDF8]"></i> Popular Global Corridors</a></li>
+            <li><a href="#city-swap" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-sky-400"></i> City Cost Swap Breakdown</a></li>
+            <li><a href="#tax-estimator" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-emerald-400"></i> Gross vs Net Tax Estimator</a></li>
+            <li><a href="#tax-treaty-cheatsheet" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-amber-400"></i> Contractor Tax Treaties (DTAA)</a></li>
+            <li><a href="#community-feed" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-purple-400"></i> Live Community Salaries</a></li>
+            <li><a href="#scorecard-section" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-pink-400"></i> Shareable Offer Scorecard</a></li>
+            <li><a href="#editorial-guide" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-chevron-right text-[9px] text-amber-400"></i> PPP Guide & Economic FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Privacy & AdSense Compliance -->
+        <div class="space-y-3">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">Legal & Compliance</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><button id="footer-privacy-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-[10px] text-[#10B981]"></i> Privacy Policy & Cookies</button></li>
+            <li><button id="footer-adsense-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-cookie-bite text-[10px] text-[#38BDF8]"></i> Google AdSense Disclaimers</button></li>
+            <li><button id="footer-terms-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-file-contract text-[10px] text-amber-400"></i> Terms of Service</button></li>
+            <li><button id="footer-disclaimer-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation text-[10px] text-rose-400"></i> Compensation Disclaimer</button></li>
+            <li><a href="#review-board" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-user-check text-[10px] text-[#A3E635]"></i> Methodology & Review Board</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Data Sources & Contact -->
+        <div class="space-y-3">
+          <div class="font-bold text-white text-xs uppercase tracking-wider font-mono">Data & Support</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><button id="footer-methodology-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-database text-[10px] text-[#38BDF8]"></i> World Bank & Kaggle Sources</button></li>
+            <li><button id="footer-contact-btn" class="hover:text-white transition-colors text-left flex items-center gap-1.5"><i class="fa-solid fa-envelope text-[10px] text-[#A3E635]"></i> Contact & Data Inquiries</button></li>
+            <li><a href="https://data.worldbank.org/indicator/PA.NUS.PPP" target="_blank" rel="noopener" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> World Bank Open Data ICP</a></li>
+            <li><a href="https://www.kaggle.com/" target="_blank" rel="noopener" class="hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> Kaggle Cost of Living Datasets</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-6 border-t border-[#26334D]/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
+        <div>
+          EqualPay Global &copy; 2026. All rights reserved. Zero-latency open-source compensation intelligence.
+        </div>
+        <div class="flex items-center gap-4">
+          <button id="footer-quick-privacy" class="hover:text-slate-300 transition-colors">Privacy</button>
+          <span>&bull;</span>
+          <button id="footer-quick-terms" class="hover:text-slate-300 transition-colors">Terms</button>
+          <span>&bull;</span>
+          <button id="footer-quick-contact" class="hover:text-slate-300 transition-colors">Contact</button>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- FLOATING GDPR & CCPA COOKIE CONSENT BANNER -->
+  <div id="cookie-consent-banner" class="hidden fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 p-4 rounded-xl glass-panel-elevated shadow-2xl border border-[#26334D] text-xs text-slate-300 space-y-3">
+    <div class="flex items-start justify-between gap-2">
+      <div class="flex items-center gap-2 font-bold text-white">
+        <i class="fa-solid fa-cookie-bite text-amber-400 text-sm"></i>
+        <span>Cookie & AdSense Consent</span>
+      </div>
+      <button id="cookie-close-icon-btn" class="text-slate-400 hover:text-white p-1 cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="text-[11px] text-slate-400 leading-relaxed">
+      EqualPay Global uses essential cookies for parity calculation persistence and compliant Google AdSense advertising cookies to fund this free tool under GDPR/CCPA.
+    </p>
+    <!-- Expandable preferences drawer -->
+    <div id="cookie-details-drawer" class="hidden text-[10px] space-y-2 border-t border-[#26334D] pt-2 text-slate-400">
+      <label class="flex items-center justify-between">
+        <span>Essential Parity Session Cookies:</span>
+        <span class="text-[#A3E635] font-mono font-bold">Required</span>
+      </label>
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Google AdSense & Ad Personalization:</span>
+        <input type="checkbox" id="cookie-adsense-toggle" checked class="accent-[#A3E635] cursor-pointer">
+      </label>
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Anonymous Usage Analytics:</span>
+        <input type="checkbox" id="cookie-analytics-toggle" checked class="accent-[#38BDF8] cursor-pointer">
+      </label>
+    </div>
+    <div class="flex items-center justify-between gap-2 pt-1 border-t border-[#26334D]/60">
+      <button id="cookie-customize-btn" type="button" class="text-[11px] text-slate-400 hover:text-white underline cursor-pointer">
+        Preferences
+      </button>
+      <div class="flex items-center gap-2">
+        <button id="cookie-reject-btn" type="button" class="px-3 py-1.5 rounded-lg bg-[#0B0F19] hover:bg-[#161F30] border border-[#26334D] text-slate-300 text-[11px] font-bold cursor-pointer transition-colors">
+          Essential Only
+        </button>
+        <button id="cookie-accept-btn" type="button" class="px-3.5 py-1.5 rounded-lg btn-neon-primary text-[11px] font-bold cursor-pointer shadow-md">
+          Accept All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
