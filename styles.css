@@ -562,4 +562,159 @@ html.light-mode .corridor-card:hover {
   font-weight: 700;
 }
 
+/* ==========================================================================
+   Comprehensive Mobile & Phone UI Enhancements (Responsive Moat)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  /* Prevent horizontal layout shifts / wobbling on phone screens */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent iOS Safari auto-zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Optimize glass panel paddings on small devices for maximum screen real estate */
+  .glass-panel {
+    padding: 1rem !important; /* 16px instead of 24px/32px */
+    border-radius: 12px !important;
+  }
+
+  .glass-panel-elevated {
+    padding: 1.15rem !important;
+    border-radius: 12px !important;
+  }
+
+  /* Mobile Popover Dropdowns: Lock to 100% width, never flow offscreen */
+  #home-combobox-menu,
+  #target-combobox-menu {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 240px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Header adjustments on mobile */
+  header {
+    height: 60px !important;
+  }
+
+  header .max-w-7xl {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    height: 60px !important;
+  }
+
+  /* Main container vertical rhythm on mobile */
+  main {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Hero adjustments for clean mobile typography */
+  #equalizer h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.22 !important;
+  }
+
+  #equalizer p {
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Radial Gauge on mobile */
+  .gauge-svg {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  /* Scorecard Card padding & typography on phone */
+  #scorecard-container {
+    padding: 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  #sc-role-title {
+    font-size: 1.15rem !important;
+  }
+
+  #sc-base-salary,
+  #sc-ppp-salary {
+    font-size: 1.1rem !important;
+  }
+
+  /* Full-width primary action buttons on mobile */
+  #download-card-btn,
+  #download-brief-pdf-btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  /* Social Share button bar */
+  #share-linkedin-btn,
+  #share-twitter-btn,
+  #copy-link-btn {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    font-size: 10.5px !important;
+  }
+
+  /* Corridor Cards */
+  .corridor-card {
+    padding: 12px 14px !important;
+  }
+
+  /* Touch scrolling smoothness */
+  #community-feed-list,
+  #target-combobox-list,
+  #home-combobox-list {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* AdSense Slot adjustments on mobile */
+  .adsense-wrapper {
+    width: 100% !important;
+    padding: 0.5rem !important;
+  }
+
+  #ad-slot-leaderboard {
+    min-height: 50px !important;
+  }
+
+  /* Cookie consent banner on mobile */
+  #cookie-consent-banner {
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    bottom: 0.75rem !important;
+    padding: 1rem !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* Modal Dialogs on small screens */
+  #privacy-modal > div,
+  #methodology-modal > div,
+  #terms-contact-modal > div {
+    padding: 1.25rem !important;
+    max-height: 90vh !important;
+    margin: 0.5rem !important;
+  }
+}
+
 
