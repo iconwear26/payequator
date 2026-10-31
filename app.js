@@ -1628,21 +1628,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 10. Smooth Dark / Light Mode Theme Switch ---
+  // --- 10. Smooth Dark / Light Mode Theme Switch & System Sync ---
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+  function getPreferredTheme() {
+    const saved = localStorage.getItem('payequator_theme') || localStorage.getItem('equalpay_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'light';
+    }
+    return 'dark';
+  }
 
   function applyTheme(theme) {
     const isLight = theme === 'light';
     if (isLight) {
       document.documentElement.classList.add('light-mode');
+      document.documentElement.classList.remove('dark');
       if (themeToggleIcon) themeToggleIcon.className = 'fa-solid fa-sun text-amber-500';
     } else {
       document.documentElement.classList.remove('light-mode');
+      document.documentElement.classList.add('dark');
       if (themeToggleIcon) themeToggleIcon.className = 'fa-solid fa-moon text-[#A3E635]';
     }
-    localStorage.setItem('equalpay_theme', theme);
-
+    
     // Synchronize Chart.js palette with theme
     if (costChart && costChart.options && costChart.options.scales && costChart.options.scales.r) {
       costChart.options.scales.r.angleLines.color = isLight ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)';
@@ -1656,13 +1666,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const savedTheme = localStorage.getItem('equalpay_theme') || 'dark';
-  applyTheme(savedTheme);
+  // Load and apply initial theme
+  applyTheme(getPreferredTheme());
+
+  // Listen to OS system color scheme changes (when no manual override is saved)
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+      const hasManualChoice = localStorage.getItem('payequator_theme') || localStorage.getItem('equalpay_theme');
+      if (!hasManualChoice) {
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
+    });
+  }
 
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
       const isLight = document.documentElement.classList.contains('light-mode');
       const nextTheme = isLight ? 'dark' : 'light';
+      localStorage.setItem('payequator_theme', nextTheme);
+      localStorage.setItem('equalpay_theme', nextTheme);
       applyTheme(nextTheme);
       showToast(`Switched to ${nextTheme === 'light' ? 'Light Mode' : 'Dark Fintech'} theme`);
     });

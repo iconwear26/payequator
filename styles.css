@@ -1,25 +1,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
-:root {
-  --bg-deep: #0B0F19;
+/* ==========================================================================
+   Centralized Theme Custom Properties Architecture
+   ========================================================================== */
+
+:root,
+html.dark {
+  /* Dark Theme Palette (Default Fintech Mode) */
+  --bg-app: #0B0F19;
   --bg-surface: #161F30;
   --bg-surface-elevated: #1D2A42;
-  --border-subtle: #26334D;
-  --border-highlight: rgba(163, 230, 53, 0.3);
-  --neon-lime: #A3E635;
-  --neon-emerald: #10B981;
-  --sky-blue: #38BDF8;
+  --bg-card: rgba(22, 31, 48, 0.85);
+  --bg-card-elevated: rgba(29, 42, 66, 0.9);
+  --bg-input: #0B0F19;
+  --bg-input-dropdown: #161F30;
+  --bg-track: #0B0F19;
+  
+  --border-app: #26334D;
+  --border-subtle: rgba(38, 51, 77, 0.8);
+  --border-focus: #38BDF8;
+
   --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
+
+  --accent-neon: #A3E635;
+  --accent-emerald: #10B981;
+  --accent-sky: #38BDF8;
+  --accent-amber: #FBBF24;
+  --accent-rose: #FB7185;
+  --accent-purple: #C084FC;
+
+  --badge-bg-neon: rgba(163, 230, 53, 0.15);
+  --badge-bg-sky: rgba(56, 189, 248, 0.15);
+  --badge-bg-emerald: rgba(16, 185, 129, 0.15);
+
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-dropdown: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --header-bg: rgba(11, 15, 25, 0.92);
+  --footer-bg: #0B0F19;
 }
 
+html.light-mode {
+  /* Light Theme Palette: Crisp, Pure, High-Contrast Accessible */
+  --bg-app: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --bg-card-elevated: #FFFFFF;
+  --bg-input: #FFFFFF;
+  --bg-input-dropdown: #FFFFFF;
+  --bg-track: #E2E8F0;
+
+  --border-app: #E2E8F0;
+  --border-subtle: #CBD5E1;
+  --border-focus: #0284C7;
+
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-dim: #64748B;
+
+  --accent-neon: #15803D; /* Deep forest green for AAA contrast on white */
+  --accent-emerald: #047857;
+  --accent-sky: #0284C7;
+  --accent-amber: #B45309;
+  --accent-rose: #BE123C;
+  --accent-purple: #6D28D9;
+
+  --badge-bg-neon: rgba(21, 128, 61, 0.12);
+  --badge-bg-sky: rgba(2, 132, 199, 0.12);
+  --badge-bg-emerald: rgba(4, 120, 87, 0.12);
+
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-dropdown: 0 12px 32px -4px rgba(0, 0, 0, 0.12);
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --footer-bg: #F1F5F9;
+}
+
+/* Base Styles */
 * {
   box-sizing: border-box;
 }
 
-body {
-  background-color: var(--bg-deep);
+html, body {
+  background-color: var(--bg-app);
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11", "calt", "kern";
@@ -28,27 +94,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.012em;
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Professional Typography Hierarchy */
+/* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   letter-spacing: -0.025em;
   font-weight: 700;
+  color: var(--text-primary);
 }
 
 h1 {
   letter-spacing: -0.038em;
-  line-height: 1.12;
+  line-height: 1.15;
 }
 
 h2 {
   letter-spacing: -0.03em;
-  line-height: 1.22;
-}
-
-h3 {
-  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 p {
@@ -62,197 +126,136 @@ p {
   letter-spacing: -0.02em;
 }
 
-/* Eyebrow Label Typography */
-.eyebrow-badge {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* Background Atmospheric Glows */
+/* Background Atmosphere */
 .bg-ambient-grid {
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
-    linear-gradient(to right, rgba(38, 51, 77, 0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(38, 51, 77, 0.15) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+    linear-gradient(to right, rgba(38, 51, 77, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(38, 51, 77, 0.12) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
 }
 
-/* Glassmorphic Dark Container */
+html.light-mode .bg-ambient-grid {
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+    linear-gradient(to right, rgba(226, 232, 240, 0.7) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.7) 1px, transparent 1px);
+}
+
+/* Surfaces & Cards */
 .glass-panel {
-  background: rgba(22, 31, 48, 0.78);
+  background: var(--bg-card) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-app) !important;
   border-radius: 12px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow-card);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-elevated {
-  background: rgba(29, 42, 66, 0.85);
+  background: var(--bg-card-elevated) !important;
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle) !important;
   border-radius: 12px;
+  box-shadow: var(--shadow-card);
 }
 
-.glass-panel:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-}
-
-/* Neon Glow Accents */
+/* Primary Neon Buttons */
 .btn-neon-primary {
   background: linear-gradient(135deg, #A3E635 0%, #10B981 100%);
-  color: #05130B;
+  color: #05130B !important;
   font-weight: 700;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
   transition: all 0.2s ease-in-out;
 }
 
 .btn-neon-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 28px rgba(163, 230, 53, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-  filter: brightness(1.05);
-}
-
-.btn-neon-primary:active {
-  transform: translateY(1px);
+  box-shadow: 0 0 28px rgba(163, 230, 53, 0.55);
 }
 
 .pulse-indicator {
   display: inline-block;
-  width: 9px;
-  height: 9px;
-  background-color: var(--neon-lime);
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-neon);
   border-radius: 50%;
-  box-shadow: 0 0 12px var(--neon-lime);
   animation: pulseNeon 2s infinite;
 }
 
 @keyframes pulseNeon {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 8px rgba(163, 230, 53, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0);
-  }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(163, 230, 53, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(163, 230, 53, 0); }
 }
 
-/* Subtle Shimmer for High Value Numbers */
 .gradient-text-neon {
-  background: linear-gradient(135deg, #FFFFFF 20%, #A3E635 100%);
+  background: linear-gradient(135deg, #A3E635 20%, #38BDF8 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.gradient-text-sky {
-  background: linear-gradient(135deg, #FFFFFF 30%, #38BDF8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Header & Nav */
+header {
+  background: var(--header-bg) !important;
+  border-bottom: 1px solid var(--border-app) !important;
 }
 
-/* Custom Combobox Popover animation */
-#home-combobox-menu, #target-combobox-menu {
-  animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.15);
+footer {
+  background: var(--footer-bg) !important;
+  border-top: 1px solid var(--border-app) !important;
 }
 
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Custom Select & Form Styles */
-.custom-input {
-  background: rgba(11, 15, 25, 0.75);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
+/* Form Controls & Inputs */
+select, input, textarea, .custom-input {
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-app) !important;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.custom-input:focus {
+select option {
+  background-color: var(--bg-input-dropdown) !important;
+  color: var(--text-primary) !important;
+}
+
+input:focus, select:focus, textarea:focus, .custom-input:focus {
   outline: none;
-  border-color: var(--sky-blue);
+  border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
 }
 
-/* AdSense Slot Native Wrappers & CLS Containment */
-.adsense-wrapper {
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px dashed rgba(38, 51, 77, 0.9);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-  contain: layout style paint;
+input::placeholder, textarea::placeholder {
+  color: var(--text-dim) !important;
+  opacity: 1;
 }
 
-#ad-slot-leaderboard {
-  min-height: 90px;
+/* Combobox Popover Menus */
+#home-combobox-menu,
+#target-combobox-menu {
+  background: var(--bg-card-elevated) !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-dropdown) !important;
 }
 
-#ad-slot-rectangle {
-  min-width: 300px;
-  min-height: 250px;
+#home-combobox-list > div,
+#target-combobox-list > div {
+  color: var(--text-primary) !important;
 }
 
-.ad-badge {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #64748B;
-  background: rgba(11, 15, 25, 0.7);
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-bottom: 6px;
-  font-family: 'JetBrains Mono', monospace;
+#home-combobox-list > div:hover,
+#target-combobox-list > div:hover {
+  background-color: var(--bg-surface-elevated) !important;
 }
 
-/* Radial Gauge Container */
-.gauge-svg {
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
-.gauge-circle-bg {
-  stroke: #1e293b;
-  stroke-width: 14;
-  fill: none;
-}
-
-.gauge-circle-progress {
-  stroke-width: 14;
-  stroke-linecap: round;
-  fill: none;
-  transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.5s ease;
-}
-
-/* Scorecard Export Styles */
+/* Scorecard Container & Components */
 #scorecard-container {
-  background: radial-gradient(circle at 10% 20%, rgba(29, 42, 66, 0.95), rgba(11, 15, 25, 0.98));
-  border: 1px solid rgba(163, 230, 53, 0.25);
-  border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-app) !important;
+  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
 }
@@ -260,151 +263,113 @@ p {
 #scorecard-container::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 3px;
   background: linear-gradient(90deg, #10B981, #A3E635, #38BDF8);
 }
 
-/* Base Dark Mode Font Visibility & Contrast Enhancement */
-select option {
-  background-color: #161F30 !important;
-  color: #F8FAFC !important;
+#sc-role-title { color: var(--text-primary) !important; }
+#sc-base-salary { color: var(--text-primary) !important; }
+#sc-ppp-salary { color: var(--accent-neon) !important; }
+
+/* Corridor Cards */
+.corridor-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-app) !important;
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #94A3B8 !important;
-  opacity: 1 !important;
+.corridor-card:hover {
+  border-color: var(--border-focus) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(56, 189, 248, 0.15);
+}
+
+/* Poll Option Card */
+.poll-option-card {
+  position: relative;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-app) !important;
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.poll-option-card:hover {
+  border-color: var(--border-focus) !important;
+  background: var(--bg-surface-elevated) !important;
+}
+
+.poll-option-card.voted {
+  border-color: var(--accent-neon) !important;
+}
+
+.poll-bar-fill {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  background: rgba(56, 189, 248, 0.12);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.poll-option-card.voted .poll-bar-fill {
+  background: rgba(163, 230, 53, 0.18);
+}
+
+/* City Swap Progress Track */
+.city-swap-track,
+.flex-grow.bg-\[\#0B0F19\] {
+  background-color: var(--bg-track) !important;
+}
+
+/* FinTech Quote Box */
+.fintech-quote {
+  border-left: 3px solid var(--accent-neon);
+  background: var(--bg-surface);
+  padding: 1rem 1.25rem;
+  border-radius: 0 10px 10px 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Modals */
+#privacy-modal > div,
+#methodology-modal > div,
+#terms-contact-modal > div {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-app) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-dropdown);
 }
 
 /* ==========================================================================
-   Comprehensive Light Mode Theme Architecture (Accessible & High Contrast)
+   Universal Light Mode Dynamic Mappings (Zero Conflict Assurance)
    ========================================================================== */
-html.light-mode {
-  --bg-deep: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-surface-elevated: #F1F5F9;
-  --border-subtle: #E2E8F0;
-  --border-highlight: rgba(22, 163, 74, 0.3);
-  --neon-lime: #15803D;
-  --neon-emerald: #047857;
-  --sky-blue: #0284C7;
-  --text-primary: #0F172A;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
-}
 
-html.light-mode body {
-  background-color: #F8FAFC !important;
-  color: #0F172A !important;
-}
-
-html.light-mode .bg-ambient-grid {
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-    linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 48px 48px, 48px 48px !important;
-}
-
-/* Glass Panels in Light Mode */
-html.light-mode .glass-panel {
-  background: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-}
-
-html.light-mode .glass-panel-elevated {
-  background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Universal Dark Background Overrides for Light Mode */
-html.light-mode .bg-\[\#0B0F19\],
-html.light-mode [class*="bg-[#0B0F19]"] {
-  background-color: #F1F5F9 !important;
-}
-
-html.light-mode .bg-\[\#161F30\],
-html.light-mode [class*="bg-[#161F30]"] {
-  background-color: #F8FAFC !important;
-}
-
-html.light-mode .bg-\[\#1D2A42\],
-html.light-mode [class*="bg-[#1D2A42]"] {
-  background-color: #EDF2F7 !important;
-}
-
-/* Gradient Containers in Light Mode */
-html.light-mode [class*="bg-gradient-to-br from-[#161F30]"],
-html.light-mode [class*="bg-gradient-to-br from-[#0B0F19]"],
-html.light-mode [class*="bg-gradient-to-tr from-[#161F30]"] {
-  background: linear-gradient(135deg, #FFFFFF, #F1F5F9) !important;
-  border-color: #CBD5E1 !important;
-}
-
-/* Border Overrides in Light Mode */
-html.light-mode .border-\[\#26334D\],
-html.light-mode [class*="border-[#26334D]"],
-html.light-mode [class*="border-slate-700"] {
-  border-color: #E2E8F0 !important;
-}
-
-/* Typography Hierarchy & Contrast in Light Mode */
 html.light-mode h1, 
 html.light-mode h2, 
 html.light-mode h3, 
 html.light-mode h4,
 html.light-mode h5,
-html.light-mode h6 {
-  color: #0F172A !important;
-}
-
-html.light-mode p,
-html.light-mode li,
-html.light-mode label {
-  color: #334155 !important;
-}
-
-html.light-mode strong,
-html.light-mode b {
-  color: #0F172A !important;
-}
-
-/* Slate Text Scales Mapped to High-Contrast Light Mode Equivalents */
-html.light-mode .text-slate-100,
-html.light-mode .text-slate-200 {
-  color: #0F172A !important;
-}
-
-html.light-mode .text-slate-300 {
-  color: #334155 !important;
-}
-
-html.light-mode .text-slate-400 {
-  color: #475569 !important;
-}
-
-html.light-mode .text-slate-500,
-html.light-mode .text-slate-600 {
-  color: #64748B !important;
-}
-
-/* General Text White Inverted to Rich Dark Slate */
+html.light-mode h6,
 html.light-mode .text-white {
-  color: #0F172A !important;
+  color: var(--text-primary) !important;
 }
 
-/* Preserve White Text on CTA Buttons with Vibrant / Gradient Backgrounds */
+/* Exceptions: Preserve pure white text on solid/gradient CTA buttons */
 html.light-mode button.bg-gradient-to-r,
 html.light-mode button.bg-gradient-to-r *,
 html.light-mode a.bg-gradient-to-r,
 html.light-mode a.bg-gradient-to-r *,
 html.light-mode #download-brief-pdf-btn,
 html.light-mode #download-brief-pdf-btn *,
+html.light-mode #calculate-btn,
+html.light-mode #calculate-btn *,
 html.light-mode #quick-share-btn,
 html.light-mode #quick-share-btn span,
 html.light-mode .btn-primary,
@@ -412,493 +377,142 @@ html.light-mode .btn-primary * {
   color: #FFFFFF !important;
 }
 
-/* High-Contrast Accessible Accents in Light Mode */
+html.light-mode .text-slate-100,
+html.light-mode .text-slate-200 {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .text-slate-300 {
+  color: var(--text-secondary) !important;
+}
+
+html.light-mode .text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+html.light-mode .text-slate-500,
+html.light-mode .text-slate-600 {
+  color: var(--text-dim) !important;
+}
+
+html.light-mode p,
+html.light-mode li,
+html.light-mode label {
+  color: var(--text-secondary);
+}
+
+html.light-mode strong,
+html.light-mode b {
+  color: var(--text-primary) !important;
+}
+
+/* Accents mapped in Light Mode */
 html.light-mode .text-\[\#A3E635\],
 html.light-mode [class*="text-[#A3E635]"] {
-  color: #15803D !important; /* WCAG AAA on light */
+  color: var(--accent-neon) !important;
 }
 
 html.light-mode [class*="bg-[#A3E635]/15"],
 html.light-mode [class*="bg-[#A3E635]/20"],
 html.light-mode [class*="bg-[#A3E635]/30"] {
-  background-color: rgba(21, 128, 61, 0.12) !important;
-  border-color: rgba(21, 128, 61, 0.35) !important;
-  color: #15803D !important;
+  background-color: var(--badge-bg-neon) !important;
+  color: var(--accent-neon) !important;
 }
 
 html.light-mode .text-\[\#38BDF8\],
 html.light-mode [class*="text-[#38BDF8]"] {
-  color: #0284C7 !important; /* High contrast sky blue */
+  color: var(--accent-sky) !important;
 }
 
 html.light-mode [class*="bg-[#38BDF8]/15"],
 html.light-mode [class*="bg-[#38BDF8]/20"],
-html.light-mode [class*="bg-[#38BDF8]/30"],
-html.light-mode [class*="bg-[#38BDF8]/40"] {
-  background-color: rgba(2, 132, 199, 0.12) !important;
-  border-color: rgba(2, 132, 199, 0.35) !important;
-  color: #0284C7 !important;
+html.light-mode [class*="bg-[#38BDF8]/30"] {
+  background-color: var(--badge-bg-sky) !important;
+  color: var(--accent-sky) !important;
 }
 
 html.light-mode .text-emerald-400,
 html.light-mode [class*="text-emerald-400"] {
-  color: #047857 !important;
+  color: var(--accent-emerald) !important;
 }
 
 html.light-mode .text-amber-400,
 html.light-mode [class*="text-amber-400"] {
-  color: #B45309 !important;
+  color: var(--accent-amber) !important;
 }
 
 html.light-mode .text-purple-400,
 html.light-mode [class*="text-purple-400"] {
-  color: #6D28D9 !important;
+  color: var(--accent-purple) !important;
 }
 
 html.light-mode .text-rose-400,
 html.light-mode [class*="text-rose-400"] {
-  color: #BE123C !important;
+  color: var(--accent-rose) !important;
 }
 
-/* Form Controls & Inputs in Light Mode */
-html.light-mode select, 
-html.light-mode input, 
-html.light-mode textarea,
-html.light-mode .custom-input {
-  color: #0F172A !important;
-  background-color: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
+/* Background classes mapped in Light Mode */
+html.light-mode .bg-\[\#0B0F19\],
+html.light-mode [class*="bg-[#0B0F19]"] {
+  background-color: var(--bg-surface-elevated) !important;
 }
 
-html.light-mode select option {
-  background-color: #FFFFFF !important;
-  color: #0F172A !important;
+html.light-mode .bg-\[\#161F30\],
+html.light-mode [class*="bg-[#161F30]"] {
+  background-color: var(--bg-surface) !important;
 }
 
-html.light-mode input::placeholder,
-html.light-mode textarea::placeholder {
-  color: #64748B !important;
+html.light-mode .bg-\[\#1D2A42\],
+html.light-mode [class*="bg-[#1D2A42]"] {
+  background-color: var(--bg-surface-elevated) !important;
 }
 
-/* Combobox Dropdown Popovers in Light Mode */
-html.light-mode #home-combobox-menu,
-html.light-mode #target-combobox-menu {
-  background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.12) !important;
+html.light-mode [class*="border-[#26334D]"],
+html.light-mode [class*="border-slate-700"] {
+  border-color: var(--border-app) !important;
 }
 
-html.light-mode #home-combobox-menu .combobox-item,
-html.light-mode #target-combobox-menu .combobox-item {
-  color: #0F172A !important;
-}
-
-html.light-mode #home-combobox-menu .combobox-item:hover,
-html.light-mode #target-combobox-menu .combobox-item:hover {
-  background-color: #F1F5F9 !important;
-}
-
-html.light-mode #home-combobox-list > div,
-html.light-mode #target-combobox-list > div {
-  color: #0F172A !important;
-}
-
-html.light-mode #home-combobox-list > div:hover,
-html.light-mode #target-combobox-list > div:hover {
-  background-color: #F1F5F9 !important;
-}
-
-html.light-mode #home-combobox-list > div.bg-\[\#38BDF8\]\/20,
-html.light-mode #target-combobox-list > div.bg-\[\#38BDF8\]\/20 {
-  background-color: rgba(2, 132, 199, 0.12) !important;
-  border-color: rgba(2, 132, 199, 0.4) !important;
-}
-
-html.light-mode #home-combobox-list span.bg-\[\#0B0F19\],
-html.light-mode #target-combobox-list span.bg-\[\#0B0F19\] {
-  background-color: #F1F5F9 !important;
-  border-color: #CBD5E1 !important;
-}
-
-/* Header & Mobile Dropdown in Light Mode */
-html.light-mode header {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+html.light-mode [class*="bg-gradient-to-br from-[#161F30]"],
+html.light-mode [class*="bg-gradient-to-br from-[#0B0F19]"],
+html.light-mode [class*="bg-gradient-to-tr from-[#161F30]"] {
+  background: linear-gradient(135deg, #FFFFFF, #F1F5F9) !important;
+  border-color: var(--border-app) !important;
 }
 
 html.light-mode #mobile-nav-menu {
   background: rgba(255, 255, 255, 0.98) !important;
-  border-top-color: #E2E8F0 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  border-top: 1px solid var(--border-app) !important;
+  box-shadow: var(--shadow-dropdown) !important;
 }
 
 html.light-mode #mobile-nav-menu .mobile-nav-link,
 html.light-mode #mobile-nav-menu button {
-  color: #0F172A !important;
+  color: var(--text-primary) !important;
 }
 
 html.light-mode #mobile-nav-menu .mobile-nav-link:hover,
 html.light-mode #mobile-nav-menu button:hover {
-  background-color: #F1F5F9 !important;
+  background-color: var(--bg-surface-elevated) !important;
 }
 
-/* Footer in Light Mode */
-html.light-mode footer {
-  background: #F1F5F9 !important;
-  border-color: #E2E8F0 !important;
-}
-
-/* AdSense Slot Native Wrappers in Light Mode */
-html.light-mode .adsense-wrapper {
-  background: #F8FAFC !important;
-  border-color: #CBD5E1 !important;
-}
-
-html.light-mode .adsense-wrapper .ad-badge {
-  color: #64748B !important;
-}
-
-/* Scorecard Container in Light Mode */
-html.light-mode #scorecard-container {
-  background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08) !important;
-}
-
-html.light-mode #sc-role-title {
-  color: #0F172A !important;
-}
-
-html.light-mode #sc-base-salary {
-  color: #0F172A !important;
-}
-
-html.light-mode #sc-ppp-salary {
-  color: #15803D !important;
-}
-
-/* City Swap Breakdown & Bars in Light Mode */
-html.light-mode .flex-grow.bg-\[\#0B0F19\] {
-  background-color: #E2E8F0 !important;
-}
-
-html.light-mode #cat-rent-diff,
-html.light-mode #cat-groceries-diff,
-html.light-mode #cat-restaurant-diff {
-  color: #047857 !important;
-}
-
-/* Popular Corridor Quick-Link Cards in Light Mode */
-html.light-mode .corridor-card {
-  background: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-}
-
-html.light-mode .corridor-card:hover {
-  border-color: #0284C7 !important;
-  background: #F8FAFC !important;
-  box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.15) !important;
-}
-
-/* Tax Treaty & W-8BEN Cheat-Sheet in Light Mode */
 html.light-mode #treaty-output-card {
   background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  border-color: var(--border-app) !important;
 }
 
-html.light-mode #treaty-output-card .bg-\[\#0B0F19\] {
-  background-color: #F1F5F9 !important;
-  border-color: #CBD5E1 !important;
-  color: #0F172A !important;
-}
-
-/* Tax Net Estimator Cards in Light Mode */
-html.light-mode #tax-home-gross,
-html.light-mode #tax-target-gross-req {
-  color: #0F172A !important;
-}
-
-html.light-mode #tax-home-net {
-  color: #15803D !important;
-}
-
-html.light-mode #tax-target-net-needed {
-  color: #0284C7 !important;
-}
-
-html.light-mode #tax-mode-emp.bg-\[\#1D2A42\],
-html.light-mode #tax-mode-contractor.bg-\[\#1D2A42\] {
-  background-color: #FFFFFF !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Community Salary Feed in Light Mode */
 html.light-mode .community-feed-item,
 html.light-mode #community-feed-list > div {
   background: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
-}
-
-/* Community Poll Option Cards in Light Mode */
-html.light-mode .poll-option-card {
-  background: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-}
-
-html.light-mode .poll-option-card:hover {
-  border-color: #0284C7 !important;
-  background: #F8FAFC !important;
-}
-
-html.light-mode .poll-option-card.voted {
-  border-color: #16A34A !important;
-}
-
-html.light-mode .poll-bar-fill {
-  background: rgba(2, 132, 199, 0.1) !important;
-}
-
-html.light-mode .poll-option-card.voted .poll-bar-fill {
-  background: rgba(22, 163, 74, 0.14) !important;
-}
-
-/* Review Board & Expert Bios in Light Mode */
-html.light-mode #review-board > div.grid > div {
-  background: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
-}
-
-/* Modals & Cookie Consent Banner in Light Mode */
-html.light-mode #privacy-modal > div,
-html.light-mode #methodology-modal > div,
-html.light-mode #terms-contact-modal > div {
-  background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  color: #0F172A !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.18) !important;
-}
-
-html.light-mode #cookie-consent-banner {
-  background: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  color: #0F172A !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-}
-
-html.light-mode .fintech-quote {
-  background: #F1F5F9 !important;
-  border-left-color: #0284C7 !important;
-  color: #0F172A !important;
-}
-
-/* Dedicated Print-to-PDF Stylesheet for Compensation Brief */
-@media print {
-  body {
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
-  }
-
-  header, footer, .adsense-wrapper, #quick-share-btn, #mobile-menu-toggle-btn, #cookie-consent-banner, #salary-presets, #negotiation-tone-toggle, #download-card-btn, #download-brief-pdf-btn, #share-linkedin-btn, #share-twitter-btn, #copy-link-btn, #community-poll-section, #community-salary-feed {
-    display: none !important;
-  }
-
-  main {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  .glass-panel {
-    background: #FFFFFF !important;
-    border: 1px solid #CCCCCC !important;
-    box-shadow: none !important;
-    page-break-inside: avoid;
-  }
-
-  #scorecard-container {
-    background: #FFFFFF !important;
-    border: 2px solid #000000 !important;
-    color: #000000 !important;
-    box-shadow: none !important;
-  }
-
-  #scorecard-container * {
-    color: #000000 !important;
-  }
-
-  #sc-ppp-salary {
-    color: #047857 !important;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0B0F19;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #26334D;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #38BDF8;
-}
-
-/* Tooltip Styles */
-[data-tooltip] {
-  position: relative;
-  cursor: help;
-}
-
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #0f172a;
-  color: #e2e8f0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  border: 1px solid #334155;
-  z-index: 50;
-}
-
-[data-tooltip]:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-2px);
-}
-
-/* FAQ Accordion Summary Marker Reset & Smooth Hover */
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-details summary {
-  list-style: none;
-}
-
-details[open] {
-  border-color: rgba(56, 189, 248, 0.4);
-  background: rgba(29, 42, 66, 0.65);
-}
-
-/* Styled Blockquote for Editorial Articles */
-blockquote.fintech-quote {
-  border-left: 3px solid var(--neon-lime);
-  background: rgba(16, 185, 129, 0.06);
-  padding: 14px 18px;
-  border-radius: 0 10px 10px 0;
-  color: #E2E8F0;
-  font-size: 13px;
-  line-height: 1.6;
-  margin: 16px 0;
-}
-
-/* Stacked Lifestyle Expense Bar */
-.stacked-expense-bar {
-  display: flex;
-  height: 14px;
-  border-radius: 7px;
-  overflow: hidden;
-  background-color: #0B0F19;
-  border: 1px solid var(--border-subtle);
-}
-
-.stacked-expense-bar > div {
-  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Poll Option Card */
-.poll-option-card {
-  background: rgba(11, 15, 25, 0.6);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 12px 16px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-
-.poll-option-card:hover {
-  border-color: var(--sky-blue);
-  background: rgba(29, 42, 66, 0.5);
-}
-
-.poll-option-card.voted {
-  border-color: var(--neon-lime);
-}
-
-.poll-bar-fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(56, 189, 248, 0.15);
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.poll-option-card.voted .poll-bar-fill {
-  background: rgba(163, 230, 53, 0.2);
-}
-
-/* Corridor Quick-Link Cards */
-.corridor-card {
-  background: rgba(22, 31, 48, 0.7);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.corridor-card:hover {
-  border-color: var(--sky-blue);
-  transform: translateY(-2px);
-  background: rgba(29, 42, 66, 0.9);
-  box-shadow: 0 8px 24px -4px rgba(56, 189, 248, 0.12);
-}
-
-
-
-/* Treaty Lookup Card */
-.treaty-pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
+  border-color: var(--border-app) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
 /* ==========================================================================
-   Comprehensive Mobile & Phone UI Enhancements (Responsive Moat)
+   Mobile Responsiveness & Viewport Enhancements (Max-Width 640px)
    ========================================================================== */
 
 @media (max-width: 640px) {
-  /* Prevent horizontal layout shifts / wobbling on phone screens */
+  /* Prevent horizontal scrolling & viewport shaking */
   html, body {
     overflow-x: hidden !important;
     max-width: 100vw !important;
@@ -906,20 +520,66 @@ blockquote.fintech-quote {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Prevent iOS Safari auto-zoom on input focus */
+  /* Prevent iOS Safari auto-zoom on input focus (minimum 16px font-size) */
   input, select, textarea {
     font-size: 16px !important;
   }
 
-  /* Optimize glass panel paddings on small devices for maximum screen real estate */
+  /* Optimal panel paddings for small mobile displays */
   .glass-panel {
-    padding: 1rem !important; /* 16px instead of 24px/32px */
+    padding: 1rem !important;
     border-radius: 12px !important;
   }
 
   .glass-panel-elevated {
     padding: 1.15rem !important;
     border-radius: 12px !important;
+  }
+
+  /* Header adjustments: flexible container allowing menu dropdown */
+  header {
+    height: auto !important;
+    min-height: 58px !important;
+  }
+
+  header > .max-w-7xl {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    height: 58px !important;
+  }
+
+  /* Main container vertical rhythm */
+  main {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Mobile Dropdown Navigation Menu */
+  #mobile-nav-menu {
+    border-top: 1px solid var(--border-app) !important;
+    padding: 0.5rem 0.75rem !important;
+    width: 100% !important;
+  }
+
+  #mobile-nav-menu .mobile-nav-link,
+  #mobile-nav-menu button {
+    padding: 0.75rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+  }
+
+  /* Hero adjustments for clean mobile typography */
+  #equalizer h1 {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+  }
+
+  #equalizer p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
   }
 
   /* Mobile Popover Dropdowns: Lock to 100% width, never flow offscreen */
@@ -929,69 +589,24 @@ blockquote.fintech-quote {
     right: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
-    max-height: 240px !important;
+    max-height: 250px !important;
     -webkit-overflow-scrolling: touch;
-  }
-
-  /* Header adjustments on mobile: allow menu expansion while fixing bar height */
-  header {
-    height: auto !important;
-    min-height: 60px !important;
-  }
-
-  header > .max-w-7xl {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-    height: 60px !important;
-  }
-
-  /* Mobile Dropdown Navigation Menu */
-  #mobile-nav-menu {
-    border-top: 1px solid var(--border-subtle) !important;
-    padding: 0.75rem 1rem !important;
-    width: 100% !important;
-  }
-
-  #mobile-nav-menu .mobile-nav-link,
-  #mobile-nav-menu button {
-    padding: 0.75rem 0.875rem !important;
-    font-size: 0.85rem !important;
-    border-radius: 8px !important;
-  }
-
-  /* Main container vertical rhythm on mobile */
-  main {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-    padding-top: 0.75rem !important;
-    padding-bottom: 2rem !important;
-  }
-
-  /* Hero adjustments for clean mobile typography */
-  #equalizer h1 {
-    font-size: 1.75rem !important;
-    line-height: 1.22 !important;
-  }
-
-  #equalizer p {
-    font-size: 0.85rem !important;
-    line-height: 1.55 !important;
   }
 
   /* Radial Gauge on mobile */
   .gauge-svg {
-    width: 110px !important;
-    height: 110px !important;
+    width: 105px !important;
+    height: 105px !important;
   }
 
   /* Scorecard Card padding & typography on phone */
   #scorecard-container {
     padding: 1rem !important;
-    border-radius: 14px !important;
+    border-radius: 12px !important;
   }
 
   #sc-role-title {
-    font-size: 1.15rem !important;
+    font-size: 1.1rem !important;
   }
 
   #sc-base-salary,
@@ -1018,7 +633,7 @@ blockquote.fintech-quote {
     justify-content: center !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
-    font-size: 10.5px !important;
+    font-size: 11px !important;
   }
 
   /* Corridor Cards */
@@ -1038,8 +653,9 @@ blockquote.fintech-quote {
   #methodology-modal > div,
   #terms-contact-modal > div {
     padding: 1.25rem !important;
-    max-height: 90vh !important;
+    max-height: 88vh !important;
     margin: 0.5rem !important;
+    width: 95% !important;
   }
 
   /* Mobile Table horizontal scrolling container */
@@ -1055,8 +671,12 @@ blockquote.fintech-quote {
 
   /* City swap chart container */
   #city-swap canvas {
-    max-height: 250px !important;
+    max-height: 240px !important;
+    width: 100% !important;
+  }
+
+  /* Quick presets flex wrapping */
+  #salary-presets {
+    flex-wrap: wrap !important;
   }
 }
-
-
