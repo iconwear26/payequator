@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menu.classList.remove('hidden');
       renderComboboxList(type, '');
       searchInput.value = '';
-      setTimeout(() => searchInput.focus(), 50);
+      if (window.innerWidth > 640) setTimeout(() => searchInput.focus(), 50);
     } else {
       menu.classList.add('hidden');
       if (homeWrapper) homeWrapper.style.zIndex = '40';
@@ -1953,41 +1953,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 13. GDPR/CCPA Floating Cookie Consent Banner ---
-  const cookieBanner = document.getElementById('cookie-consent-banner');
-  const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
-  const cookieRejectBtn = document.getElementById('cookie-reject-btn');
-  const cookieCloseIconBtn = document.getElementById('cookie-close-icon-btn');
-  const cookieCustomizeBtn = document.getElementById('cookie-customize-btn');
-  const cookieDetailsDrawer = document.getElementById('cookie-details-drawer');
 
-  function initCookieConsent() {
-    const consent = localStorage.getItem('equalpay_cookie_consent');
-    if (!consent && cookieBanner) {
-      setTimeout(() => {
-        cookieBanner.classList.remove('hidden');
-      }, 1200);
-    }
-  }
-
-  function dismissCookieBanner(type) {
-    if (cookieBanner) {
-      cookieBanner.classList.add('hidden');
-    }
-    localStorage.setItem('equalpay_cookie_consent', type);
-    showToast(type === 'all' ? 'Cookie preferences saved: All enabled' : 'Cookie preferences saved: Essential only');
-  }
-
-  if (cookieAcceptBtn) cookieAcceptBtn.addEventListener('click', () => dismissCookieBanner('all'));
-  if (cookieRejectBtn) cookieRejectBtn.addEventListener('click', () => dismissCookieBanner('essential'));
-  if (cookieCloseIconBtn) cookieCloseIconBtn.addEventListener('click', () => dismissCookieBanner('dismissed'));
-
-  if (cookieCustomizeBtn && cookieDetailsDrawer) {
-    cookieCustomizeBtn.addEventListener('click', () => {
-      cookieDetailsDrawer.classList.toggle('hidden');
-      cookieCustomizeBtn.textContent = cookieDetailsDrawer.classList.contains('hidden') ? 'Preferences' : 'Hide Details';
-    });
-  }
 
   // --- 14. Programmatic Dynamic Comparison Corridors ---
   const corridorsGrid = document.getElementById('corridors-grid');
@@ -2231,7 +2197,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadQueryParams();
   calculate();
   renderCommunityFeed();
-  initCookieConsent();
   renderCorridors();
   initTreatySelectors();
 });

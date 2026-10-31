@@ -1033,26 +1033,6 @@ blockquote.fintech-quote {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* AdSense Slot adjustments on mobile */
-  .adsense-wrapper {
-    width: 100% !important;
-    padding: 0.5rem !important;
-  }
-
-  #ad-slot-leaderboard {
-    min-height: 50px !important;
-  }
-
-  /* Cookie consent banner on mobile */
-  #cookie-consent-banner {
-    left: 0.75rem !important;
-    right: 0.75rem !important;
-    bottom: 0.75rem !important;
-    padding: 1rem !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important;
-  }
-
   /* Modal Dialogs on small screens */
   #privacy-modal > div,
   #methodology-modal > div,
