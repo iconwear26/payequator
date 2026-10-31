@@ -844,11 +844,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeData = [homeLoc.index, homeLoc.rentIndex, homeLoc.groceriesIndex, homeLoc.restaurantIndex];
     const targetData = [targetLoc.index, targetLoc.rentIndex, targetLoc.groceriesIndex, targetLoc.restaurantIndex];
 
+    const isLightMode = document.documentElement.classList.contains('light-mode');
+
     if (costChart) {
       costChart.data.datasets[0].label = `${homeLoc.city.split('/')[0]} (Home)`;
       costChart.data.datasets[0].data = homeData;
       costChart.data.datasets[1].label = `${targetLoc.city.split('/')[0]} (Target)`;
       costChart.data.datasets[1].data = targetData;
+      if (costChart.options && costChart.options.scales && costChart.options.scales.r) {
+        costChart.options.scales.r.angleLines.color = isLightMode ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)';
+        costChart.options.scales.r.grid.color = isLightMode ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)';
+        costChart.options.scales.r.pointLabels.color = isLightMode ? '#0F172A' : '#94A3B8';
+        costChart.options.scales.r.ticks.color = isLightMode ? '#475569' : '#64748B';
+      }
+      if (costChart.options && costChart.options.plugins && costChart.options.plugins.legend) {
+        costChart.options.plugins.legend.labels.color = isLightMode ? '#0F172A' : '#E2E8F0';
+      }
       costChart.update();
     } else {
       costChart = new Chart(ctx, {
@@ -881,15 +892,15 @@ document.addEventListener('DOMContentLoaded', () => {
           maintainAspectRatio: false,
           scales: {
             r: {
-              angleLines: { color: 'rgba(38, 51, 77, 0.7)' },
-              grid: { color: 'rgba(38, 51, 77, 0.7)' },
+              angleLines: { color: isLightMode ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)' },
+              grid: { color: isLightMode ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)' },
               pointLabels: {
-                color: '#94A3B8',
-                font: { size: 10, family: "'Plus Jakarta Sans', sans-serif" }
+                color: isLightMode ? '#0F172A' : '#94A3B8',
+                font: { size: 10, family: "'Plus Jakarta Sans', sans-serif", weight: '600' }
               },
               ticks: {
                 backdropColor: 'transparent',
-                color: '#64748B',
+                color: isLightMode ? '#475569' : '#64748B',
                 font: { size: 9 }
               },
               min: 0,
@@ -900,8 +911,8 @@ document.addEventListener('DOMContentLoaded', () => {
             legend: {
               position: 'bottom',
               labels: {
-                color: '#E2E8F0',
-                font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
+                color: isLightMode ? '#0F172A' : '#E2E8F0',
+                font: { size: 11, family: "'Plus Jakarta Sans', sans-serif", weight: '600' },
                 boxWidth: 12
               }
             }
@@ -1622,14 +1633,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleIcon = document.getElementById('theme-toggle-icon');
 
   function applyTheme(theme) {
-    if (theme === 'light') {
+    const isLight = theme === 'light';
+    if (isLight) {
       document.documentElement.classList.add('light-mode');
-      if (themeToggleIcon) themeToggleIcon.className = 'fa-solid fa-sun text-amber-400';
+      if (themeToggleIcon) themeToggleIcon.className = 'fa-solid fa-sun text-amber-500';
     } else {
       document.documentElement.classList.remove('light-mode');
       if (themeToggleIcon) themeToggleIcon.className = 'fa-solid fa-moon text-[#A3E635]';
     }
     localStorage.setItem('equalpay_theme', theme);
+
+    // Synchronize Chart.js palette with theme
+    if (costChart && costChart.options && costChart.options.scales && costChart.options.scales.r) {
+      costChart.options.scales.r.angleLines.color = isLight ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)';
+      costChart.options.scales.r.grid.color = isLight ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)';
+      costChart.options.scales.r.pointLabels.color = isLight ? '#0F172A' : '#94A3B8';
+      costChart.options.scales.r.ticks.color = isLight ? '#475569' : '#64748B';
+      if (costChart.options.plugins && costChart.options.plugins.legend) {
+        costChart.options.plugins.legend.labels.color = isLight ? '#0F172A' : '#E2E8F0';
+      }
+      costChart.update();
+    }
   }
 
   const savedTheme = localStorage.getItem('equalpay_theme') || 'dark';
