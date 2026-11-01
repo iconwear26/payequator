@@ -111,7 +111,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
   <!-- Custom Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="styles.css?v=20261101_v6">
+  <link rel="stylesheet" href="styles.css?v=20261101_v7">
 
   <!-- Critical Theme & High-Contrast Typography Styles (Zero-Cache Guarantee) -->
   <style id="theme-critical-styles">
@@ -150,13 +150,46 @@
     html.light-mode button.bg-gradient-to-r *,
     html.light-mode a.bg-gradient-to-r,
     html.light-mode a.bg-gradient-to-r *,
-    html.light-mode #download-brief-pdf-btn,
-    html.light-mode #download-brief-pdf-btn *,
     html.light-mode #quick-share-btn,
     html.light-mode #quick-share-btn span,
     html.light-mode .btn-primary,
     html.light-mode .btn-primary * {
       color: #FFFFFF !important;
+    }
+    /* Compensation Brief PDF Button in Light Mode */
+    html.light-mode #download-brief-pdf-btn {
+      background-color: #F1F5F9 !important;
+      color: #0F172A !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.light-mode #download-brief-pdf-btn:hover {
+      background-color: #E2E8F0 !important;
+    }
+    html.light-mode #download-brief-pdf-btn span {
+      color: #0F172A !important;
+    }
+    html.light-mode #download-brief-pdf-btn i {
+      color: #0284C7 !important;
+    }
+    /* Twitter / X Button in Light Mode */
+    html.light-mode #share-twitter-btn {
+      background-color: #0F172A !important;
+      border-color: #0F172A !important;
+    }
+    html.light-mode #share-twitter-btn,
+    html.light-mode #share-twitter-btn * {
+      color: #FFFFFF !important;
+    }
+    /* LinkedIn Button */
+    #share-linkedin-btn,
+    #share-linkedin-btn * {
+      color: #FFFFFF !important;
+    }
+    /* Scorecard Standard Range Badge in Light Mode */
+    html.light-mode #sc-percentile-badge {
+      background-color: #F1F5F9 !important;
+      color: #334155 !important;
+      border-color: #CBD5E1 !important;
     }
     html.light-mode .text-slate-100,
     html.light-mode .text-slate-200 {
@@ -689,14 +722,14 @@
               </div>
 
               <!-- Radial Gauge SVG -->
-              <div class="relative w-32 h-32 mx-auto my-1 flex items-center justify-center">
-                <svg class="gauge-svg w-32 h-32" viewBox="0 0 120 120">
+              <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto my-1 flex items-center justify-center">
+                <svg class="gauge-svg w-full h-full" viewBox="0 0 120 120">
                   <circle class="gauge-circle-bg" cx="60" cy="60" r="50"></circle>
                   <circle id="gauge-progress" class="gauge-circle-progress stroke-[#A3E635]" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="120"></circle>
                 </svg>
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <span id="fair-value-percent" class="text-2xl font-black font-mono text-white">88%</span>
-                  <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Of Benchmark</span>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none select-none">
+                  <span id="fair-value-percent" class="text-xl sm:text-2xl font-black font-mono leading-none">88%</span>
+                  <span class="text-[8px] sm:text-[9px] uppercase tracking-wider text-slate-400 font-bold mt-1">Of Benchmark</span>
                 </div>
               </div>
 
@@ -2454,7 +2487,7 @@
   </nav>
 
   <!-- Scripts with Cache Buster -->
-  <script src="data.js?v=20261101_v6"></script>
-  <script src="app.js?v=20261101_v6"></script>
+  <script src="data.js?v=20261101_v7"></script>
+  <script src="app.js?v=20261101_v7"></script>
 </body>
 </html>

@@ -539,7 +539,12 @@ document.addEventListener('DOMContentLoaded', () => {
       scPercentileBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono bg-gradient-to-r from-sky-500/30 to-emerald-500/30 text-sky-300 border border-sky-400/50';
     } else {
       scPercentileBadge.textContent = 'Standard Range';
-      scPercentileBadge.className = 'px-3 py-1 rounded-full text-xs font-bold font-mono bg-slate-800 text-slate-300 border border-slate-700';
+      const isLightMode = document.documentElement.classList.contains('light-mode');
+      scPercentileBadge.className = `px-3 py-1 rounded-full text-xs font-bold font-mono border ${
+        isLightMode 
+          ? 'bg-slate-100 text-slate-800 border-slate-300' 
+          : 'bg-slate-800 text-slate-300 border-slate-700'
+      }`;
     }
 
     scMarketStanding.textContent = standingText;
@@ -1673,6 +1678,11 @@ document.addEventListener('DOMContentLoaded', () => {
         costChart.options.plugins.legend.labels.color = isLight ? '#0F172A' : '#E2E8F0';
       }
       costChart.update();
+    }
+
+    // Refresh dynamic badges and meters for active theme
+    if (salaryInput && salaryInput.value) {
+      calculate();
     }
   }
 

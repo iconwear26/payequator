@@ -233,6 +233,43 @@ html.light-mode #jump-to-scorecard:hover {
   color: #FFFFFF !important;
 }
 
+/* Compensation Brief PDF Button in Light Mode */
+html.light-mode #download-brief-pdf-btn {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light-mode #download-brief-pdf-btn:hover {
+  background-color: #E2E8F0 !important;
+}
+
+html.light-mode #download-brief-pdf-btn span {
+  color: #0F172A !important;
+}
+
+html.light-mode #download-brief-pdf-btn i {
+  color: #0284C7 !important;
+}
+
+/* Twitter / X Button in Light Mode */
+html.light-mode #share-twitter-btn {
+  background-color: #0F172A !important;
+  border-color: #0F172A !important;
+}
+
+html.light-mode #share-twitter-btn,
+html.light-mode #share-twitter-btn * {
+  color: #FFFFFF !important;
+}
+
+/* Scorecard Standard Range Badge in Light Mode */
+html.light-mode #sc-percentile-badge {
+  background-color: #F1F5F9 !important;
+  color: #334155 !important;
+  border-color: #CBD5E1 !important;
+}
+
 /* Surfaces & Cards */
 .glass-panel {
   background: var(--bg-card) !important;
@@ -624,8 +661,19 @@ html.light-mode #community-feed-list > div {
     -webkit-tap-highlight-color: transparent;
   }
 
-  body {
-    padding-bottom: 4.5rem !important; /* Safety clearance for Floating Mobile Dock */
+  body, main {
+    padding-bottom: 6rem !important; /* Safety clearance for Floating Mobile Dock */
+  }
+
+  /* Clear section scroll anchors from floating dock and fixed header */
+  #equalizer,
+  #city-swap,
+  #tax-estimator,
+  #editorial-guide,
+  #results-dashboard,
+  #scorecard-section {
+    scroll-margin-top: 5rem;
+    scroll-margin-bottom: 5.5rem;
   }
 
   /* Prevent iOS Safari auto-zoom on input focus (minimum 16px font-size) */
@@ -703,8 +751,8 @@ html.light-mode #community-feed-list > div {
 
   /* Radial Gauge on mobile */
   .gauge-svg {
-    width: 105px !important;
-    height: 105px !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   /* Scorecard Card padding & typography on phone */
