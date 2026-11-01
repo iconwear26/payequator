@@ -111,7 +111,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
   <!-- Custom Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="styles.css?v=20261101_v5">
+  <link rel="stylesheet" href="styles.css?v=20261101_v6">
 
   <!-- Critical Theme & High-Contrast Typography Styles (Zero-Cache Guarantee) -->
   <style id="theme-critical-styles">
@@ -218,11 +218,69 @@
       background-color: #F1F5F9 !important;
       border-color: #CBD5E1 !important;
     }
-    html.light-mode [class*="bg-gradient-to-br from-[#161F30]"],
-    html.light-mode [class*="bg-gradient-to-br from-[#0B0F19]"],
-    html.light-mode [class*="bg-gradient-to-tr from-[#161F30]"] {
+    /* Universal Gradient Reset for Light Mode */
+    html.light-mode [class*="from-[#161F30]"],
+    html.light-mode [class*="from-[#0B0F19]"],
+    html.light-mode [class*="from-[#1D2A42]"],
+    html.light-mode [class*="to-[#1D2A42]"],
+    html.light-mode [class*="to-[#161F30]"] {
       background: linear-gradient(135deg, #FFFFFF, #F1F5F9) !important;
       border-color: #CBD5E1 !important;
+      color: #0F172A !important;
+    }
+
+    /* Radial Gauge Circle Stroke & Clean Fill */
+    .gauge-circle-bg {
+      fill: none !important;
+      stroke: #1D2A42;
+      stroke-width: 10;
+    }
+    .gauge-circle-progress {
+      fill: none !important;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html.light-mode .gauge-circle-bg {
+      stroke: #E2E8F0 !important;
+    }
+    html.light-mode #fair-value-percent {
+      color: #0F172A !important;
+    }
+    html.light-mode #fair-value-percent + span {
+      color: #475569 !important;
+    }
+
+    /* Cost Multiplier & Insight Callout in Light Mode */
+    html.light-mode .text-amber-300,
+    html.light-mode [class*="text-amber-300"] {
+      color: #B45309 !important;
+    }
+    html.light-mode #jump-to-scorecard {
+      background-color: #E0F2FE !important;
+      color: #0369A1 !important;
+      border-color: #BAE6FD !important;
+    }
+    html.light-mode #jump-to-scorecard:hover {
+      background-color: #0284C7 !important;
+      color: #FFFFFF !important;
+    }
+    html.light-mode #ppp-insight-summary,
+    html.light-mode #ppp-insight-summary strong {
+      color: #1E293B !important;
+    }
+
+    /* Floating Mobile Dock in Light Mode */
+    html.light-mode #mobile-dock {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-color: #E2E8F0 !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12) !important;
+    }
+    html.light-mode #mobile-dock a,
+    html.light-mode #mobile-dock button {
+      color: #334155 !important;
     }
     html.light-mode header {
       background: rgba(255, 255, 255, 0.95) !important;
@@ -689,16 +747,16 @@
           </div>
 
           <!-- DYNAMIC INSIGHT CALLOUT -->
-          <div class="p-4 rounded-xl bg-gradient-to-r from-[#161F30] via-[#1D2A42] to-[#161F30] border border-[#26334D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div id="insight-callout-card" class="p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-lg bg-[#38BDF8]/15 border border-[#38BDF8]/30 flex items-center justify-center shrink-0">
                 <i class="fa-solid fa-lightbulb text-[#38BDF8]"></i>
               </div>
-              <p id="ppp-insight-summary" class="text-xs sm:text-sm text-slate-300 leading-snug">
+              <p id="ppp-insight-summary" class="text-xs sm:text-sm leading-snug">
                 <strong>1.00 USD</strong> in San Francisco has the same purchasing power as approximately <strong>23.50 INR</strong> in India — offering a massive lifestyle arbitage for remote engineering talent.
               </p>
             </div>
-            <button id="jump-to-scorecard" class="shrink-0 text-xs font-bold px-3 py-2 rounded-lg bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/40 hover:bg-[#38BDF8] hover:text-slate-900 transition-colors flex items-center gap-1.5">
+            <button id="jump-to-scorecard" class="shrink-0 text-xs font-bold px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
               <span>Generate Scorecard</span>
               <i class="fa-solid fa-arrow-down text-[10px]"></i>
             </button>
@@ -2371,8 +2429,32 @@
     </div>
   </footer>
 
+  <!-- Floating Mobile Quick-Action Dock (Zero-Scroll Instant Section Navigation) -->
+  <nav id="mobile-dock" aria-label="Quick mobile navigation" class="fixed bottom-3 left-3 right-3 sm:hidden z-40 bg-[#161F30]/95 backdrop-blur-xl border border-[#26334D] rounded-2xl p-1.5 flex items-center justify-around shadow-2xl transition-all duration-200">
+    <a href="#equalizer" class="flex flex-col items-center gap-0.5 text-[10px] font-bold text-slate-300 hover:text-[#A3E635] py-1 px-2.5 rounded-xl active:bg-[#1D2A42] transition-colors">
+      <i class="fa-solid fa-calculator text-xs text-[#A3E635]"></i>
+      <span>Calc</span>
+    </a>
+    <a href="#city-swap" class="flex flex-col items-center gap-0.5 text-[10px] font-bold text-slate-300 hover:text-[#38BDF8] py-1 px-2.5 rounded-xl active:bg-[#1D2A42] transition-colors">
+      <i class="fa-solid fa-arrows-split-up-and-left text-xs text-[#38BDF8]"></i>
+      <span>Cities</span>
+    </a>
+    <a href="#tax-estimator" class="flex flex-col items-center gap-0.5 text-[10px] font-bold text-slate-300 hover:text-emerald-400 py-1 px-2.5 rounded-xl active:bg-[#1D2A42] transition-colors">
+      <i class="fa-solid fa-receipt text-xs text-emerald-400"></i>
+      <span>Tax</span>
+    </a>
+    <a href="#editorial-guide" class="flex flex-col items-center gap-0.5 text-[10px] font-bold text-slate-300 hover:text-purple-400 py-1 px-2.5 rounded-xl active:bg-[#1D2A42] transition-colors">
+      <i class="fa-solid fa-graduation-cap text-xs text-purple-400"></i>
+      <span>Guide</span>
+    </a>
+    <button id="dock-back-to-top" class="flex flex-col items-center gap-0.5 text-[10px] font-bold text-slate-300 hover:text-white py-1 px-2.5 rounded-xl active:bg-[#1D2A42] transition-colors cursor-pointer">
+      <i class="fa-solid fa-arrow-up text-xs text-slate-400"></i>
+      <span>Top</span>
+    </button>
+  </nav>
+
   <!-- Scripts with Cache Buster -->
-  <script src="data.js?v=20261101_v5"></script>
-  <script src="app.js?v=20261101_v5"></script>
+  <script src="data.js?v=20261101_v6"></script>
+  <script src="app.js?v=20261101_v6"></script>
 </body>
 </html>

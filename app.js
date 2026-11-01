@@ -2223,6 +2223,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (boardCorrectionBtn) boardCorrectionBtn.addEventListener('click', openBoardInquiry);
   if (modalBoardInquiryBtn) modalBoardInquiryBtn.addEventListener('click', openBoardInquiry);
 
+  // Mobile Dock Back to Top smooth scroll
+  const dockBackToTop = document.getElementById('dock-back-to-top');
+  if (dockBackToTop) {
+    dockBackToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // --- Initialize App ---
   initCurrencies();
   initHiddenSelects();
