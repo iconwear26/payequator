@@ -137,6 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const targetWrapper = document.getElementById('target-combobox-wrapper');
 
   // Flag HTML Helper with real CDN image for Windows compatibility
+  // --- Performance Utilities: Debounce ---
+  function debounce(func, wait = 120) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
   function renderFlagHtml(loc) {
     if (loc && loc.code) {
       return `<img src="https://flagcdn.com/20x15/${loc.code}.png" alt="${loc.country}" class="w-5 h-3.5 object-cover rounded shadow-sm inline-block shrink-0">`;
@@ -478,16 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
       standingClass = 'Tier-1 Elite';
       subtext = 'Top decile real-world wealth accumulation.';
       gaugeProgress.style.stroke = '#A3E635';
-
-      // Confetti trigger
-      if (window.confetti && Math.random() < 0.3) {
-        window.confetti({
-          particleCount: 35,
-          spread: 55,
-          origin: { y: 0.7 },
-          colors: ['#A3E635', '#10B981', '#38BDF8']
-        });
-      }
     }
 
     fairValueBadge.textContent = standingClass;
@@ -860,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (costChart.options && costChart.options.plugins && costChart.options.plugins.legend) {
         costChart.options.plugins.legend.labels.color = isLightMode ? '#0F172A' : '#E2E8F0';
       }
-      costChart.update();
+      costChart.update('none');
     } else {
       costChart = new Chart(ctx, {
         type: 'radar',
@@ -890,6 +889,14 @@ document.addEventListener('DOMContentLoaded', () => {
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: {
+              top: 10,
+              bottom: 8,
+              left: 14,
+              right: 14
+            }
+          },
           scales: {
             r: {
               angleLines: { color: isLightMode ? 'rgba(203, 213, 225, 0.8)' : 'rgba(38, 51, 77, 0.7)' },
@@ -950,6 +957,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 6. Event Handlers & Micro-interactions ---
   
+  // Debounced calculate for buttery smooth keystroke performance
+  const debouncedCalculate = debounce(calculate, 120);
+
   // Format salary input on user typing
   salaryInput.addEventListener('input', (e) => {
     const rawVal = e.target.value.replace(/[^0-9]/g, '');
@@ -957,7 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const num = parseInt(rawVal, 10);
       e.target.value = num.toLocaleString('en-US');
     }
-    calculate();
+    debouncedCalculate();
   });
 
   currencySelect.addEventListener('change', calculate);

@@ -80,11 +80,21 @@ html.light-mode {
 }
 
 /* Base Styles */
-* {
+*, ::before, ::after {
   box-sizing: border-box;
 }
 
-html, body {
+html {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
   background-color: var(--bg-app);
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
@@ -93,8 +103,26 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.012em;
-  overflow-x: hidden;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+main {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.grid {
+  min-width: 0;
+}
+
+.grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.flex {
+  min-width: 0;
 }
 
 /* Typography Hierarchy */
@@ -177,18 +205,31 @@ html.light-mode .bg-ambient-grid {
 }
 
 .pulse-indicator {
+  position: relative;
   display: inline-block;
   width: 8px;
   height: 8px;
   background-color: var(--accent-neon);
   border-radius: 50%;
-  animation: pulseNeon 2s infinite;
 }
 
-@keyframes pulseNeon {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(163, 230, 53, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(163, 230, 53, 0); }
+.pulse-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--accent-neon);
+  animation: pulseNeonGpu 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes pulseNeonGpu {
+  0% { transform: scale(1); opacity: 0.8; }
+  70%, 100% { transform: scale(2.4); opacity: 0; }
 }
 
 .gradient-text-neon {
@@ -675,8 +716,37 @@ html.light-mode #community-feed-list > div {
     width: 100% !important;
   }
 
+  /* Universal card mobile containment */
+  .glass-panel {
+    padding: 1rem !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Universal grid & flex containment */
+  .grid, .flex {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Canvas responsive containment */
+  canvas {
+    max-width: 100% !important;
+  }
+
   /* Quick presets flex wrapping */
   #salary-presets {
     flex-wrap: wrap !important;
   }
+}
+
+/* ==========================================================================
+   High-Performance Rendering Optimizations: Off-Screen Subtrees
+   ========================================================================== */
+#editorial-guide,
+#community-feed,
+#review-board,
+#community-poll-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
 }
